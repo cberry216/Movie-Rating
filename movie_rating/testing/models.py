@@ -10,6 +10,7 @@ class Group(models.Model):
 
 class User(models.Model):
     user_id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=60)
     group_id = models.ForeignKey(
         Group,
         on_delete=models.CASCADE,
