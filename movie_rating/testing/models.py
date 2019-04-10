@@ -3,6 +3,12 @@ from django.db import models
 # Create your models here.
 
 
+class Group(models.Model):
+    group_id = models.IntegerField(primary_key=True)
+    group_name = models.CharField(max_length=60)
+    created = models.DateTimeField(auto_now_add=True)
+
+
 class User(models.Model):
     user_id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=60)
@@ -48,9 +54,3 @@ class Rating(models.Model):
     rating = models.FloatField()
     comment = models.TextField(null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-
-
-class Group(models.Model):
-    group_id = models.IntegerField(primary_key=True)
-    group_name = models.CharField(max_length=60)
-    created = models.DateTimeField(auto_now_add=True)
