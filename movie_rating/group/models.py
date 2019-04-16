@@ -1,6 +1,5 @@
 from django.db import models
-
-from movie_rating.user.models import User
+from django.conf import settings
 
 # Create your models here.
 
@@ -23,7 +22,7 @@ class GroupAdmin(models.Model):
         on_delete=models.CASCADE,
     )
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
     status = models.CharField(
@@ -40,17 +39,19 @@ class Invitation(models.Model):
     ]
     invitation_id = models.IntegerField(primary_key=True)
     sender = models.ForeignKey(
-        User,
-        related_name='sent_invitations'
+        settings.AUTH_USER_MODEL,
+        related_name='sent_invitations',
+        on_delete=models.CASCADE
     )
     receiver = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name='received_invitations',
         on_delete=models.CASCADE
     )
     group = models.ForeignKey(
         Group,
-        related_name='invitations_to_join'
+        related_name='invitations_to_join',
+        on_delete=models.CASCADE
     )
     status = models.CharField(
         max_length=8,
