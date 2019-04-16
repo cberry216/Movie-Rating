@@ -75,6 +75,7 @@ class Movie(models.Model):
     ]
     movie_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
     rated = models.CharField(
         max_length=5,
         choices=MOVIE_RATINGS,
