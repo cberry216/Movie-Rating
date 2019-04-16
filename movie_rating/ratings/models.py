@@ -5,7 +5,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    user_id = models.IntegerField(primary_key=True)
+    user_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=60, unique=True)
     first_name = models.CharField(max_length=60)
     last_name = models.CharField(max_length=80, null=True, blank=True)
@@ -16,7 +16,7 @@ class User(AbstractUser):
 
 
 class Group(models.Model):
-    group_id = models.IntegerField(primary_key=True)
+    group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=60, unique=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -25,7 +25,7 @@ class Group(models.Model):
 
 
 class GroupAdminMember(models.Model):
-    group_admin_id = models.IntegerField(primary_key=True)
+    group_admin_id = models.AutoField(primary_key=True)
     group = models.ForeignKey(
         Group,
         on_delete=models.CASCADE,
@@ -41,7 +41,7 @@ class Invitation(models.Model):
         ('sent', 'sent'),
         ('ignored', 'ignored')
     ]
-    invitation_id = models.IntegerField(primary_key=True)
+    invitation_id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(
         User,
         related_name='sent_invitations',
