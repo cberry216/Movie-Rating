@@ -4,17 +4,6 @@ from django.db import models
 # Create your models here.
 
 
-class User(AbstractUser):
-    user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=60, unique=True)
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=80, null=True, blank=True)
-    email = models.CharField(max_length=120)
-
-    def __str__(self):
-        return self.username
-
-
 class Group(models.Model):
     group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=60, unique=True)
@@ -22,6 +11,22 @@ class Group(models.Model):
 
     def __str__(self):
         return self.group_name
+
+
+class User(AbstractUser):
+    user_id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=60, unique=True)
+    first_name = models.CharField(max_length=60)
+    last_name = models.CharField(max_length=80, null=True, blank=True)
+    email = models.CharField(max_length=120)
+    group = models.ForeignKey(
+        Group,
+        related_name='users',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.username
 
 
 class GroupAdminMember(models.Model):
