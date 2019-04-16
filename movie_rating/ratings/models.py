@@ -11,14 +11,20 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=80, null=True, blank=True)
     email = models.CharField(max_length=120)
 
+    def __str__(self):
+        return self.username
+
 
 class Group(models.Model):
     group_id = models.IntegerField(primary_key=True)
     group_name = models.CharField(max_length=60, unique=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.group_name
 
-class GroupAdmin(models.Model):
+
+class GroupAdminMember(models.Model):
     group_admin_id = models.IntegerField(primary_key=True)
     group = models.ForeignKey(
         Group,
