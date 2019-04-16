@@ -91,3 +91,20 @@ class Movie(models.Model):
     imdb_rating = models.FloatField(null=True, blank=True)
     rt_rating = models.IntegerField(null=True, blank=True)
     added_to_db = models.DateTimeField(auto_now_add=True)
+
+
+class Rating(models.Model):
+    rating_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(
+        User,
+        related_name='ratings',
+        on_delete=models.CASCADE
+    )
+    movie = models.ForeignKey(
+        Movie,
+        related_name='ratings',
+        on_delete=models.CASCADE
+    )
+    rating = models.FloatField()
+    comment = models.TextField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
