@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # Custom Apps
     'user.apps.UserConfig',
     'group.apps.GroupConfig',
+    'ratings.apps.RatingsConfig',
 
     # Django Apps
     'django.contrib.admin',
@@ -124,4 +125,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'ratings.User'
