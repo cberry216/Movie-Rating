@@ -11,7 +11,7 @@ class Group(models.Model):
 class User(models.Model):
     user_id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=60)
-    group_id = models.ForeignKey(
+    group = models.ForeignKey(
         Group,
         on_delete=models.CASCADE,
         related_name='users',
@@ -29,12 +29,12 @@ class Movie(models.Model):
 
 class Rating(models.Model):
     rating_id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='ratings'
     )
-    movie_id = models.ForeignKey(
+    movie = models.ForeignKey(
         Movie,
         on_delete=models.CASCADE,
         related_name='ratings'
