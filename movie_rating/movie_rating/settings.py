@@ -32,8 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # Custom Apps
-    'user.apps.UserConfig',
-    'group.apps.GroupConfig',
     'ratings.apps.RatingsConfig',
 
     # Django Apps
