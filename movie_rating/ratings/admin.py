@@ -5,7 +5,8 @@ from .models import (
     Group,
     GroupAdminMember,
     Invitation,
-    Movie
+    Movie,
+    Rating,
 )
 
 # Register your models here.
@@ -30,3 +31,9 @@ class InvitationAdmin(admin.ModelAdmin):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = ['title', 'genre', 'added_to_db']
+    prepopulated_fields = {'slug': ('title',)}
+
+
+@admin.register(Rating)
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ['movie', 'user', 'rating', 'comment', 'timestamp']
