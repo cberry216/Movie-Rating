@@ -1,12 +1,15 @@
 import requests
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from .forms import SearchForm
+from .helpers import get_unrated_movies_from_group
 
 # Create your views here.
 
 
+@login_required
 def search_movie(request):
     search_form = SearchForm()
     query = None
@@ -32,4 +35,5 @@ def search_movie(request):
         'found_results': found_results,
         'results': results,
         'has_next_page': has_next_page,
+        'unrated_group_movies': get_unrated_movies_from_group(request.user)
     })
