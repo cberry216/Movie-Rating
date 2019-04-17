@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
 from django.core.exceptions import FieldError
+from django.shortcuts import reverse
 
 from .helpers import (
     get_item_or_none,
@@ -158,3 +159,141 @@ class HelperTestCase(TestCase):
         correct_response3 = None
         test_response3 = get_unrated_movies_from_group(self.user3)
         self.assertEqual(correct_response3, test_response3)
+
+
+class ViewsTestCase(TestCase):
+
+    def setUp(self):
+        movie1 = None
+    movie2 = None
+    movie3 = None
+    movie4 = None
+    group1 = None
+    user1 = None
+    user2 = None
+    user3 = None
+    rating1 = None
+    rating2 = None
+    rating3 = None
+    rating4 = None
+    rating5 = None
+    rating6 = None
+    rating7 = None
+
+    def setUp(self):
+        self.movie1 = Movie.objects.create(
+            movie_id=1,
+            title='First Movie',
+            rated='PG',
+            released='2006-10-25',
+            runtime_minutes=100,
+            genre='Horror',
+            imdb_rating=6.4,
+            rt_rating=67
+        )
+        self.movie2 = Movie.objects.create(
+            movie_id=2,
+            title='Second Movie',
+            rated='PG-13',
+            released='2007-10-25',
+            runtime_minutes=120,
+            genre='Comedy',
+            imdb_rating=2.8,
+            rt_rating=54
+        )
+        self.movie3 = Movie.objects.create(
+            movie_id=3,
+            title='Third Movie',
+            rated='R',
+            released='2008-10-25',
+            runtime_minutes=90,
+            genre='Horror',
+            imdb_rating=3.5,
+            rt_rating=42,
+        )
+        self.movie4 = Movie.objects.create(
+            movie_id=4,
+            title='Fourth Movie',
+            rated='G',
+            released='2009-10-25',
+            runtime_minutes=86,
+            genre='Comedy',
+            imdb_rating=4.0,
+            rt_rating=61,
+        )
+        self.group1 = Group.objects.create(
+            group_id=1,
+            group_name='Cool Group'
+        )
+        self.user1 = User.objects.create(
+            user_id=1,
+            username='abc',
+            first_name='abc',
+            email='abc@abc.com',
+            group=Group.objects.get(group_id=1),
+        )
+        self.user1.set_password('password')
+        self.user1.save()
+        self.user2 = User.objects.create(
+            user_id=2,
+            username='def',
+            first_name='def',
+            email='def@def.com',
+            group=Group.objects.get(group_id=1)
+        )
+        self.user3 = User.objects.create(
+            user_id=3,
+            username='hij',
+            first_name='hij',
+            email='hij@hij.com',
+        )
+        self.rating1 = Rating.objects.create(
+            rating_id=1,
+            user=self.user1,
+            movie=self.movie1,
+            rating=3.7
+        )
+        self.rating2 = Rating.objects.create(
+            rating_id=2,
+            user=self.user2,
+            movie=self.movie1,
+            rating=6.2
+        )
+        self.rating3 = Rating.objects.create(
+            rating_id=3,
+            user=self.user3,
+            movie=self.movie1,
+            rating=8.4
+        )
+        self.rating4 = Rating.objects.create(
+            rating_id=4,
+            user=self.user1,
+            movie=self.movie2,
+            rating=7.8
+        )
+        self.rating5 = Rating.objects.create(
+            rating_id=5,
+            user=self.user2,
+            movie=self.movie3,
+            rating=5.0
+        )
+        self.rating6 = Rating.objects.create(
+            rating_id=6,
+            user=self.user1,
+            movie=self.movie4,
+            rating=6.9
+        )
+        self.rating7 = Rating.objects.create(
+            rating_id=7,
+            user=self.user2,
+            movie=self.movie4,
+            rating=2.0
+        )
+
+    def test_search_movie(self):
+        self.client.login(username='abc', password='password')
+        self.assertTrue(self.user1.is_authenticated)
+        response = self.client.get('/movie/rate-movie/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        correctUnratedMovies = [self.movie3]
+        self.assertEqual(response.context['unrated_group_movies'], correctUnratedMovies)
