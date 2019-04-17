@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+<form action="." method="get">
+  {% csrf_token %}
+  {{ search_form.as_p }}
+</form>
+{% for movie in results %}
+<p>{{ movie.Title }}</p>
+{% empty %}
+  {% if query %}
+  <p>No results returned</p>
+  {% endif %}
+{% endfor %}
+{% endblock content %}
