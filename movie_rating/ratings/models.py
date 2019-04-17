@@ -22,7 +22,9 @@ class User(AbstractUser):
     group = models.ForeignKey(
         Group,
         related_name='users',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
     def __str__(self):
