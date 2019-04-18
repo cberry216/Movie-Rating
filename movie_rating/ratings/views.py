@@ -1,10 +1,14 @@
 import requests
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect
 
 from .forms import SearchForm, UserRegistrationForm
-from .helpers import get_unrated_movies_from_group
+from .helpers import (
+    get_unrated_movies_from_group,
+    user_has_rated_movie,
+)
+from .models import Movie
 
 # Create your views here.
 
@@ -54,3 +58,9 @@ def search_movie(request):
         'has_next_page': has_next_page,
         'unrated_group_movies': get_unrated_movies_from_group(request.user)
     })
+
+
+@login_required
+def rate_movie(request, imdb_id):
+    if user_has_rated_movie(request.user, Movie.objects.get(imdb_id=imdb_id)):
+        pass
