@@ -484,9 +484,11 @@ class HeadlessTestCase(StaticLiveServerTestCase):
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 
     def test_search_movie_headless(self):
+        # Going to rate-movie without being logged in should redirect to login
+        self.driver.get(f'{self.live_server_url}/movie/rate-movie/')
+        self.assertEqual(f'{self.live_server_url}/user/login/?next=/movie/rate-movie/', self.driver.current_url)
+
         # Login with headless browser
-        self.driver.get(f'{self.live_server_url}/login/')
-        self.assertEqual(f'{self.live_server_url}/login/', self.driver.current_url)
         ui = self.driver.find_element_by_css_selector('input#id_username')
         ui.clear()
         ui.send_keys('abc')
@@ -495,5 +497,10 @@ class HeadlessTestCase(StaticLiveServerTestCase):
         pi.send_keys('password')
         ls = self.driver.find_element_by_css_selector('input#login_submit')
         ls.click()
-        self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
-        self.assertTrue(False)
+
+        # After login, next should redirect to rate-movie
+        self.assertEqual(f'{self.live_server_url}/movie/rate-movie/', self.driver.current_url)
+        unrated_movies = self.driver.find_elements_by_css_selector('.unrated_movie')
+        self.assertEqual(1, len(unrated_movies))
+        unrated_movie = unrated_movies[0]
+        self.assertEqual(self.movie3, unrated_movie)
