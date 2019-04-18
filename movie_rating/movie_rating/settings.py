@@ -124,3 +124,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'ratings.User'
+LOGIN_REDIRECT_URL = 'homepage'
+LOGOUT_REDIRECT_URL = 'homepage'
