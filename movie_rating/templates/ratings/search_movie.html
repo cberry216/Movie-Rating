@@ -10,8 +10,13 @@
 {% for movie in results %}
 <p>{{ movie.Title }}</p>
 {% empty %}
-  {% if query %}
-  <p>No results returned</p>
-  {% endif %}
+{% if query %}
+<p>No results returned</p>
+{% endif %}
+{% endfor %}
+{% for movie in unrated_group_movies %}
+<p class="unrated_movie">{{ movie.title}}</p>
+{% empty %}
+
 {% endfor %}
 {% endblock content %}
