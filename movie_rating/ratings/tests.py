@@ -9,7 +9,8 @@ from django.shortcuts import reverse
 
 from .helpers import (
     get_item_or_none,
-    get_unrated_movies_from_group
+    get_unrated_movies_from_group,
+    user_has_rated_movie,
 )
 from .models import Movie, Group, User, Rating
 
@@ -163,6 +164,11 @@ class HelperTestCase(TestCase):
         correct_response3 = None
         test_response3 = get_unrated_movies_from_group(self.user3)
         self.assertEqual(correct_response3, test_response3)
+
+    def test_user_has_not_rated_movie(self):
+        self.assertTrue(user_has_rated_movie(self.user1, self.movie1))
+        self.assertTrue(user_has_rated_movie(self.user2, self.movie1))
+        self.assertFalse(user_has_rated_movie(self.user1, self.movie3))
 
 
 class ViewsTestCase(TestCase):
@@ -503,4 +509,4 @@ class HeadlessTestCase(StaticLiveServerTestCase):
         unrated_movies = self.driver.find_elements_by_css_selector('.unrated_movie')
         self.assertEqual(1, len(unrated_movies))
         unrated_movie = unrated_movies[0]
-        self.assertEqual(self.movie3, unrated_movie)
+        self.assertEqual(self.movie3.title, unrated_movie.text)
