@@ -10,6 +10,13 @@ def get_item_or_none(model, **kwargs):
         return None
 
 
+def get_item_or_none_from_queryset(query_set, **kwargs):
+    try:
+        return query_set.get(**kwargs)
+    except ObjectDoesNotExist:
+        return None
+
+
 def get_unrated_movies_from_group(user):
     if user.group:
         group = get_item_or_none(Group, group_id=user.group.group_id)
