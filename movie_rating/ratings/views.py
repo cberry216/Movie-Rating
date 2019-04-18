@@ -98,4 +98,4 @@ def movie_detail(request, imdb_id):
 @login_required
 def rate_movie(request, imdb_id):
     if user_has_rated_movie(request.user, Movie.objects.get(imdb_id=imdb_id)):
-        pass
+        return redirect('movie_detail', imdb_id=imdb_id)
