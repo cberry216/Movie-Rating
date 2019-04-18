@@ -9,6 +9,7 @@ from django.shortcuts import reverse
 
 from .helpers import (
     get_item_or_none,
+    get_item_or_none_from_queryset,
     get_unrated_movies_from_group,
     user_has_rated_movie,
 )
@@ -149,6 +150,13 @@ class HelperTestCase(TestCase):
         self.assertEqual(passResult1, testResult1)
         self.assertEqual(None, testResult2)
         self.assertRaises(FieldError, get_item_or_none, Movie, group_id=1)
+
+    def test_get_item_or_none_from_queryset(self):
+        users = User.objects.all()
+        actual_user = get_item_or_none_from_queryset(users, user_id=1)
+        self.assertEqual(self.user1, actual_user)
+        actual_user = get_item_or_none_from_queryset(users, user_id=4)
+        self.assertEqual(None, actual_user)
 
     def test_get_unrated_movies_from_group(self):
         list_of_correct_movies1 = [self.movie3]
