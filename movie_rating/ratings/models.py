@@ -81,6 +81,7 @@ class Movie(models.Model):
         ('NC-17', 'NC-17'),
     ]
     movie_id = models.AutoField(primary_key=True)
+    imdb_id = models.CharField(max_length=12)
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
     rated = models.CharField(
