@@ -19,3 +19,8 @@ def get_unrated_movies_from_group(user):
         return [movie for movie in group_movies if movie not in user_movies]
     else:
         return None
+
+
+def user_has_rated_movie(user, movie):
+    user_rating_for_movie = get_item_or_none(Rating, user=user, movie=movie)
+    return user_rating_for_movie is not None
