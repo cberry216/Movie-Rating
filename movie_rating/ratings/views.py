@@ -9,6 +9,10 @@ from .helpers import get_unrated_movies_from_group
 # Create your views here.
 
 
+def homepage(request):
+    return render(request, 'home.html')
+
+
 @login_required
 def search_movie(request):
     search_form = SearchForm()
