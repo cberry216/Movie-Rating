@@ -1,14 +1,21 @@
 import requests
 
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Avg
 from django.shortcuts import render, redirect
 
 from .forms import SearchForm, UserRegistrationForm
 from .helpers import (
+    get_item_or_none,
+    get_item_or_none_from_queryset,
     get_unrated_movies_from_group,
     user_has_rated_movie,
 )
-from .models import Movie
+from .models import (
+    Movie,
+    Rating,
+    Group,
+)
 
 # Create your views here.
 
@@ -57,6 +64,34 @@ def search_movie(request):
         'results': results,
         'has_next_page': has_next_page,
         'unrated_group_movies': get_unrated_movies_from_group(request.user)
+    })
+
+
+@login_required
+def movie_detail(request, imdb_id):
+    group_members = []
+    group_ratings = {}
+
+    if not user_has_rated_movie(request.user, Movie.objects.get(imdb_id=imdb_id)):
+        pass
+    movie_ratings = Rating.objects.filter(movie__imdb_id=imdb_id)
+    user_rating = movie_ratings.get(user=request.user).rating
+    group = get_item_or_none(Group, group_id=request.user.group.group_id)
+    if group is not None:
+        group_query = group.users.exclude(user=request.user)
+        if len(group_query) > 0:
+            for member in group_query:
+                group_members.append(member.username)
+                rating = get_item_or_none_from_queryset(movie_ratings, user=request.user)
+                group_ratings[member.username] = None if rating is None else rating.rating
+    global_rating = movie_ratings.aggregate(avg_rating=Avg('rating'))['avg_rating']
+    movie = Movie.objects.get(imdb_id=imdb_id)
+    return render(request, 'ratings/movie_detail.html', {
+        'user_rating': user_rating,
+        'group_members': group_members,
+        'group_ratings': group_ratings,
+        'global_rating': global_rating,
+        'movie': movie
     })
 
 
