@@ -73,6 +73,7 @@ def movie_detail(request, imdb_id):
     group_ratings = {}
 
     if not user_has_rated_movie(request.user, Movie.objects.get(imdb_id=imdb_id)):
+        # TODO: Rate movie instead
         pass
     movie_ratings = Rating.objects.filter(movie__imdb_id=imdb_id)
     user_rating = movie_ratings.get(user=request.user).rating
@@ -104,18 +105,24 @@ def rate_movie(request, imdb_id):
 @login_required
 def dashboard(request):
     movies_seen_by_user = Movie.objects.filter(movie_id__in=request.user.ratings.values_list('movie__movie_id'))
-    group = Group.objects.get(group_id=request.user.group.group_id)
+    # group = Group.objects.get(group_id=request.user.group.group_id)
+    group = get_item_or_none(Group, group_id=request.user.group.group_id)
     # ratings = Rating.objects.filter(user__in=group.users.all())
     # ratings_exclude_user = ratings.exclude(user_id=request.user.user_id)
-    movies_seen_by_others = Movie.objects.filter(
-        movie_id__in=Rating.objects
-        .filter(user__in=group.users.all())
-        .exclude(user_id=request.user.user_id)
-        .values_list('movie__movie_id'))
+    movies_seen_by_others = []
+    has_group = False
+    if group is not None:
+        has_group = True
+        movies_seen_by_others = Movie.objects.filter(
+            movie_id__in=Rating.objects
+            .filter(user__in=group.users.all())
+            .exclude(user_id=request.user.user_id)
+            .values_list('movie__movie_id'))
 
     return render(request, 'ratings/dashboard.html', {
+        'has_group': has_group,
         'movies_seen_by_user': movies_seen_by_user,
         'movies_seen_by_others': movies_seen_by_others,
-        'intersect_user_other_ratings': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
-        'diff_user_other_ratings': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
+        'movies_seen_by_both': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
+        'movies_not_seen_by_user': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
     })
