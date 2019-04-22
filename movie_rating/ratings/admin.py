@@ -15,12 +15,12 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ['group_name', 'created']
+    list_display = ['group_id', 'group_name', 'created']
 
 
 @admin.register(GroupAdminMember)
 class GroupAdminMemberAdmin(admin.ModelAdmin):
-    list_display = ['user', 'group']
+    list_display = ['user', 'user', 'group']
 
 
 @admin.register(Invitation)
@@ -30,10 +30,10 @@ class InvitationAdmin(admin.ModelAdmin):
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ['title', 'genre', 'added_to_db']
+    list_display = ['movie_id', 'title', 'genre', 'added_to_db']
     prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
-    list_display = ['movie', 'user', 'rating', 'comment', 'timestamp']
+    list_display = ['rating_id', 'movie', 'user', 'rating', 'comment', 'timestamp']
