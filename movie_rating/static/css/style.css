@@ -189,6 +189,8 @@ body {
 	animation-duration: 4s;
 	animation-name: fadeout;
 	animation-fill-mode: forwards;
+
+	pointer-events: none;
 }
 
 .curtains__info {
