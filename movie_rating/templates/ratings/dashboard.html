@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}Dashboard{% endblock title %}
+
+
+{% block content %}
 <h1>Movies Seen By User</h1>
 {% for movie in movies_seen_by_user %}
 <p>{{ movie.title }}</p>
@@ -17,3 +21,18 @@
 {% else %}
 <h1>You are not part of a group</h1>
 {% endif %}
+
+<h1>Rated Movies</h1>
+{% for movie in movies_seen_by_both %}
+<p>{{ movie.title }}</p>
+{% empty %}
+<p>You have not rated any movies</p>
+{% endfor %}
+
+<h1>Unrated Movies</h1>
+{% for movie in movies_not_seen_by_user %}
+<p>{{ movie.title }}</p>
+{% empty %}
+<p>You have no unrated movies</p>
+{% endfor %}
+{% endblock content %}
