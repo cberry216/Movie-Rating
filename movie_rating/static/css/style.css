@@ -1,3 +1,275 @@
 body {
-	background-color: bisque;
+	margin: 0;
+	width: 100vw;
+	height: 100%;
+	background-color: #242424;
+
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.menu {
+	position: relative;
+	width: 100%;
+	height: 68px;
+	z-index: 10;
+
+	box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.25), -5px 3px 3px rgba(0, 0, 0, 0.25);
+	/* box-shadow: 5px 1px 1px rgba(91, 91, 91, 0.25), -5px 5px 5px rgba(29155, 91, 91, 0.25); */
+
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	grid-template-rows: 68px;
+}
+
+.menu--clickable {
+	background-color: #960500;
+
+	text-decoration: none;
+
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+
+	display: grid;
+	grid-template-columns: 68px 1fr;
+	grid-template-rows: 68px;
+}
+
+.menu--hovered {
+	background-color: #9c3835;
+}
+
+.menu__logo {
+	width: 68px;
+	height: 68px;
+
+	pointer-events: none;
+
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+}
+
+.clapperboard {
+	width: 68px;
+	height: 68px;
+}
+
+.clapperboard__top {
+	transform-origin: bottom left;
+	transform: translate(20px, 2px) rotate(-30deg);
+}
+
+.clapperboard__item--white {
+	stroke: white;
+	fill: white;
+}
+
+.clapperboard__item--red {
+	stroke: #960500;
+	fill: #960500;
+}
+
+.clapperboard__item--hovered {
+	stroke: #9c3835;
+	fill: #9c3835;
+}
+
+.menu__title {
+	color: white;
+
+	pointer-events: none;
+
+	font-family: 'Lobster', cursive;
+
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+}
+
+.menu__title h1 {
+	margin: 14px 0 14px 0;
+}
+
+.menu--unauthenticated,
+.menu--authenticated {
+	background-color: #960500;
+
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.menu__link {
+	height: 40px;
+	margin: 8px 10px 8px 12px;
+	padding: 5px;
+	color: white;
+	/* border: 1px solid white; */
+	border-radius: 3px;
+
+	font-family: 'Lobster', cursive;
+	font-size: 1.7em;
+	text-decoration: none;
+}
+
+.menu__link:hover {
+	background-color: white;
+	color: #960500;
+}
+
+.curtains {
+	position: relative;
+	width: 100vw;
+	height: 70vh;
+	background-color: #1b1b1b;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.curtains__sliding-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 6000px;
+	height: 70vh;
+	box-shadow: inset 0px -5px 5px rgba(0, 0, 0, 0.5);
+	opacity: 0.5;
+
+	animation: slideBackground 60s linear infinite;
+	animation-delay: 1s;
+
+	display: flex;
+}
+
+.curtains__movie-poster {
+	width: 100/3vw;
+	height: 70vh;
+}
+
+.curtains__curtain {
+	position: absolute;
+	height: 70vh;
+	width: 50%;
+	background: linear-gradient(to right, #f70f06 0% 60%, #fe8681 60% 70%, #5e0300 70% 100%);
+	background-size: 10%;
+	overflow: hidden;
+	z-index: 30;
+
+	animation-delay: 1s;
+	animation-duration: 3s;
+	animation-fill-mode: forwards;
+}
+
+.curtain--left {
+	top: 0px;
+	left: 0px;
+
+	animation-name: slideoutLeft;
+}
+
+.curtain--right {
+	top: 0px;
+	right: 0px;
+
+	animation-name: slideoutRight;
+}
+
+.curtains__darkness {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 70vh;
+	background-color: rgba(0, 0, 0, 0.75);
+	opacity: 1;
+	z-index: 50;
+
+	animation-duration: 4s;
+	animation-name: fadeout;
+	animation-fill-mode: forwards;
+}
+
+.curtains__info {
+	position: relative;
+	width: 40vw;
+	height: 40vh;
+	margin: 20vh 30vw 0 30vw;
+	color: white;
+	z-index: 20;
+
+	text-align: center;
+}
+
+.curtains__title {
+	margin-bottom: 5px;
+
+	font-family: 'Lobster', cursive;
+	font-size: 4em;
+	text-shadow: 3px 3px 3px black;
+}
+
+.curtains__subtitle {
+	font-family: 'American Typewriter', sans-serif;
+	font-weight: 100;
+	text-shadow: 3px 3px 3px black;
+}
+
+.curtains__signup {
+	background-color: #960500;
+	padding: 5px;
+	color: white;
+	border-radius: 3px;
+	box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.5);
+
+	font-family: 'Lobster', cursive;
+	font-size: 2em;
+	/* text-shadow: 3px 3px 3px black; */
+	text-decoration: none;
+}
+
+.curtains__signup:hover {
+	background-color: white;
+	color: #960500;
+}
+
+@keyframes slideoutLeft {
+	from {
+		left: 0px;
+	}
+
+	to {
+		left: -50%;
+	}
+}
+
+@keyframes slideoutRight {
+	from {
+		right: 0px;
+	}
+
+	to {
+		right: -50%;
+	}
+}
+
+@keyframes fadeout {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes slideBackground {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+
+	100% {
+		transform: translate3d(-3443px, 0, 0);
+	}
 }

@@ -2,11 +2,56 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>{% block title %}{% endblock title %}</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
+
 <body>
+  <div class="menu">
+    <a href="{% url 'homepage' %}" class="menu--clickable">
+      <div class="menu__logo">
+        <svg class="clapperboard">
+          <g class="clapperboard__top" width="32">
+            <polygon class="clapperboard__item--white" points="16,28 16,32 24,32 20,28"></polygon>
+            <polygon class="clapperboard__item--white" points="24,24 32,32 40,32 32,24"></polygon>
+            <polygon class="clapperboard__item--white" points="40,24 48,32 52,32 52,28 48,28 48,24"></polygon>
+            <circle class="clapperboard__item--white" cx="48" cy="28" r="4"></circle>
+            <circle class="clapperboard__item--white" cx="20" cy="28" r="4"></circle>
+            <polygon class="clapperboard__item--red" points="15,23 25,33 33,33 23,23"></polygon>
+            <polygon class="clapperboard__item--red" points="31,23 41,33 49,33 39,23"></polygon>
+          </g>
+          <g class="clapperboard__bottom">
+            <polygon class="clapperboard__item--white" points="16,44 16,52 20,52 20,56 48,56 48,52 52,52 52,44">
+            </polygon>
+            <polygon class="clapperboard__item--white" points="16,32 24,32 16,40"></polygon>
+            <polygon class="clapperboard__item--white" points="24,40 32,40 40,32 32,32"></polygon>
+            <polygon class="clapperboard__item--white" points="40,40 48,40 52,36 52,32 48,32"></polygon>
+            <circle class="clapperboard__item--white" cx="20" cy="52" r="3.9"></circle>
+            <circle class="clapperboard__item--white" cx="48" cy="52" r="3.9"></circle>
+          </g>
+        </svg>
+      </div>
+      <div class="menu__title">
+        <h1>Rate-A-Movie</h1>
+      </div>
+    </a>
+    {% if user.is_authenticated %}
+    <div class="menu--authenticated">
+      <a href="" class="menu__section"></a>
+    </div>
+    {% else %}
+    <div class="menu--unauthenticated">
+      <a class="menu__link" href="{% url 'register' %}">Signup</a>
+      <a class="menu__link" href="{% url 'login' %}">Login</a>
+    </div>
+    {% endif %}
+  </div>
   {% block content %}{% endblock content %}
+
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>
