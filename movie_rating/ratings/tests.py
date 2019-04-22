@@ -497,7 +497,7 @@ class HeadlessTestCase(StaticLiveServerTestCase):
         self.driver.get(f'{self.live_server_url}/logout/')
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 
-    def test_search_movie_headless(self):
+    def test_search_movie_unauthorized_headless(self):
         # Going to rate-movie without being logged in should redirect to login
         self.driver.get(f'{self.live_server_url}/movie/rate-movie/')
         self.assertEqual(f'{self.live_server_url}/user/login/?next=/movie/rate-movie/', self.driver.current_url)
