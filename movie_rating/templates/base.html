@@ -40,7 +40,8 @@
     </a>
     {% if user.is_authenticated %}
     <div class="menu--authenticated">
-      <a href="" class="menu__section"></a>
+      <a href="#" class="menu__section {% if section == 'dashboard' %}selected{% endif %}">Dashboard</a>
+      <a href="#" class="menu__section {% if section == 'group' %}selected{% endif %}">Group</a>
     </div>
     {% else %}
     <div class="menu--unauthenticated">
