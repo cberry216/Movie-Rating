@@ -101,6 +101,9 @@ class Movie(models.Model):
     rt_rating = models.IntegerField(null=True, blank=True)
     added_to_db = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Rating(models.Model):
     rating_id = models.AutoField(primary_key=True)
