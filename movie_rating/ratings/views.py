@@ -105,10 +105,12 @@ def rate_movie(request, imdb_id):
 @login_required
 def dashboard(request):
     movies_seen_by_user = Movie.objects.filter(movie_id__in=request.user.ratings.values_list('movie__movie_id'))
-    # group = Group.objects.get(group_id=request.user.group.group_id)
-    group = get_item_or_none(Group, group_id=request.user.group.group_id)
-    # ratings = Rating.objects.filter(user__in=group.users.all())
-    # ratings_exclude_user = ratings.exclude(user_id=request.user.user_id)
+
+    try:
+        group = get_item_or_none(Group, group_id=request.user.group.group_id)
+    except AttributeError:
+        group = None
+
     movies_seen_by_others = []
     has_group = False
     if group is not None:
@@ -124,5 +126,5 @@ def dashboard(request):
         'movies_seen_by_user': movies_seen_by_user,
         'movies_seen_by_others': movies_seen_by_others,
         'movies_seen_by_both': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
-        'movies_not_seen_by_user': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
+        'movies_not_seen_by_user': [movie for movie in movies_seen_by_others if movie not in movies_seen_by_user],
     })
