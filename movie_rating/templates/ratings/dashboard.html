@@ -4,6 +4,12 @@
 
 
 {% block content %}
+<div class="stats">
+  <div class="best"></div>
+  <div class="worst"></div>
+  <div class="stats__accuracy"></div>
+</div>
+
 <h1>Movies Seen By User</h1>
 {% for movie in movies_seen_by_user %}
 <p>{{ movie.title }}</p>
@@ -12,12 +18,12 @@
 {% endfor %}
 
 {% if has_group %}
-  <h1>Movies Seen By Your Group Members</h1>
-  {% for movie in movies_seen_by_others %}
-    <p>{{ movie.title }}</p>
-  {% empty %}
-    <p>You have not</p>
-  {% endfor %}
+<h1>Movies Seen By Your Group Members</h1>
+{% for movie in movies_seen_by_others %}
+<p>{{ movie.title }}</p>
+{% empty %}
+<p>You have not</p>
+{% endfor %}
 {% else %}
 <h1>You are not part of a group</h1>
 {% endif %}
