@@ -102,7 +102,26 @@ body {
 }
 
 .menu__section {
+	max-height: 68px;
+	margin: 0 5px;
+	padding: 0 5px;
+	padding-top: 20px;
+	color: white;
+
 	font-family: 'American Typewriter', sans-serif;
+	font-size: 1.25em;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+.selected {
+	text-decoration: underline;
+}
+
+.menu__section:hover {
+	background-color: white;
+	color: #960500;
+	text-decoration: none;
 }
 
 .menu__link {
