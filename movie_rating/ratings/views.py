@@ -1,7 +1,7 @@
 import requests
 
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db.models import Avg
+from django.db.models import Avg, Max, Min, Sum
 from django.shortcuts import render, redirect
 
 from .forms import SearchForm, UserRegistrationForm
@@ -77,6 +77,7 @@ def movie_detail(request, imdb_id):
         pass
     movie_ratings = Rating.objects.filter(movie__imdb_id=imdb_id)
     user_rating = movie_ratings.get(user=request.user).rating
+
     group = get_item_or_none(Group, group_id=request.user.group.group_id)
     if group is not None:
         group_query = group.users.exclude(user=request.user)
@@ -105,11 +106,30 @@ def rate_movie(request, imdb_id):
 @login_required
 def dashboard(request):
     movies_seen_by_user = Movie.objects.filter(movie_id__in=request.user.ratings.values_list('movie__movie_id'))
+    user_ratings = Rating.objects.filter(user=request.user)
 
     try:
         group = get_item_or_none(Group, group_id=request.user.group.group_id)
     except AttributeError:
         group = None
+
+    # Best
+    best = {}
+    highest_rating = user_ratings.aggregate(Max('rating'))['rating__max']
+    best['movie'] = (Movie.objects.get(movie_id=user_ratings.get(rating=highest_rating).movie_id), highest_rating)
+    genre_averages = user_ratings.values('movie__genre').annotate(Avg('rating')).order_by('-rating__avg')
+    director_averages = user_ratings.values('movie__director').annotate(Avg('rating')).order_by('-rating__avg')
+    best['genre'] = (genre_averages[0]['movie__genre'], genre_averages[0]['rating__avg'])
+    best['director'] = (director_averages[0]['movie__director'], director_averages[0]['rating__avg'])
+
+    # Worst
+    worst = {}
+    lowest_rating = user_ratings.aggregate(Min('rating'))['rating__min']
+    worst['movie'] = (Movie.objects.get(movie_id=user_ratings.get(rating=highest_rating).movie_id), lowest_rating)
+    worst['genre'] = (genre_averages[len(genre_averages) - 1]['movie__genre'],
+                      genre_averages[len(genre_averages) - 1]['rating__avg'])
+    worst['director'] = (director_averages[len(director_averages) - 1]['movie__director'],
+                         director_averages[len(director_averages) - 1]['rating__avg'])
 
     movies_seen_by_others = []
     has_group = False
@@ -123,6 +143,8 @@ def dashboard(request):
 
     return render(request, 'ratings/dashboard.html', {
         'has_group': has_group,
+        'best': best,
+        'worst': worst,
         'movies_seen_by_user': movies_seen_by_user,
         'movies_seen_by_others': movies_seen_by_others,
         'movies_seen_by_both': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
