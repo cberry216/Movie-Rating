@@ -5,10 +5,16 @@
 
 {% block content %}
 <div class="stats">
-  <div class="best"></div>
-  <div class="worst"></div>
-  <div class="stats__accuracy"></div>
-</div>
+  {% if best != None %}
+    <div class="best stats__item"></div>
+    <div class="worst stats__item"></div>
+    <div class="accuracy stats__item"></div>
+  {% else %}
+    <div class="stats__no-movies">
+      <h3>You have not rated any movies yet.</h3>
+    </div>
+  {% endif %}
+  </div>
 
 <h1>Movies Seen By User</h1>
 {% for movie in movies_seen_by_user %}
