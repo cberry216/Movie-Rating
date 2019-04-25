@@ -146,6 +146,7 @@ def dashboard(request):
             .values_list('movie__movie_id'))
 
     return render(request, 'ratings/dashboard.html', {
+        'section': 'dashboard',
         'has_group': has_group,
         'best': best,
         'worst': worst,
