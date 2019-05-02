@@ -260,73 +260,73 @@ body {
 	color: #960500;
 }
 
-.stats {
-	position: relative;
-	width: 100vw;
-	height: 55%;
-	background-color: white;
-	box-shadow: inset -1px -5px 3px rgba(0, 0, 0, 0.3);
-	z-index: 0;
+.group-queue {
+	height: 386px;
+	width: 100%;
+	margin-top: 15px;
+	color: white;
 
 	display: grid;
-	grid-template-columns: 3fr 3fr 2fr;
-	grid-template-rows: 55vh;
+	grid-template-columns: 1fr;
+	grid-template-rows: 46px 40px 300px;
 }
 
-.stats__item {
-	margin: 0 10px 15px 10px;
-	background-color: white;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	/* box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5); */
+.group-queue__label {
+	position: relative;
+	margin: 2px 0 4px 10px;
+
+	font-size: 2em;
+	font-weight: 400;
 }
 
-.best {
-	border-right: 5px solid #3e9b3e;
-	border-bottom: 5px solid #3e9b3e;
-	border-left: 5px solid #3e9b3e;
+.badge {
+	position: absolute;
+	left: 200px;
+	top: 0;
+	width: 20px;
+	height: 20px;
+}
+
+.badge__circle {
+	fill: red;
+	stroke: red;
+}
+
+.badge__text {
+	fill: white;
+
+	font-size: 14px;
+}
+
+.group-queue__help-text {
+	color: rgb(163, 163, 163);
+	margin: 10px 0 11px 15px;
+
+	font-size: 1em;
+	font-weight: 400;
+	letter-spacing: 0.5px;
 
 	grid-column: 1 / 2;
-	grid-row: 1 / 2;
-
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
+	grid-row: 2 / 3;
 }
 
-.worst {
-	border-right: 5px solid #be7474;
-	border-bottom: 5px solid #be7474;
-	border-left: 5px solid #be7474;
+.movie-list {
+	height: 280px;
+	width: 100%;
+	margin: 10px 0 10px 15px;
+	background-color: rgb(124, 124, 124);
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	box-shadow: inset 1px 0px 5px rgba(0, 0, 0, 0.5);
 
-	grid-column: 2 / 3;
-	grid-row: 1 / 2;
+	display: flex;
 }
 
-.accuracy {
-	border-right: 5px solid #a1b2c5;
-	border-bottom: 5px solid #a1b2c5;
-	border-left: 5px solid #a1b2c5;
-
-	grid-column: 3 / 4;
-	grid-row: 1 / 2;
-}
-
-.stats__no-movies {
-	background-color: #afa79f;
-
-	text-align: center;
-
-	grid-column: 1 / 4;
-	grid-row: 1 / 2;
-}
-
-.stats__no-movies h3 {
-	margin-top: 24vh;
-	color: #d8d4cf;
-
-	font-weight: 400;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+.movie-list__movie {
+	height: 230px;
+	width: 160px;
+	margin: 10px 10px 0 10px;
+	background-size: 160px 230px;
 }
 
 @keyframes slideoutLeft {

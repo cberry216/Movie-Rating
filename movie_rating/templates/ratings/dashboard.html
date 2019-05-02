@@ -1,20 +1,39 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% endblock title %}
+{% block title %}Dashboard{% if movies_not_seen_by_user %} | *{% endif %}{% endblock title %}
 
 
 {% block content %}
-<div class="stats">
-  {% if best != None %}
-    <div class="best stats__item"></div>
-    <div class="worst stats__item"></div>
-    <div class="accuracy stats__item"></div>
+
+<div class="group-queue">
+  <h3 class="group-queue__label">
+    Group Queue
+    {% if movies_not_seen_by_user %}
+      <svg class="badge">
+        <circle class="badge__circle" cx="10" cy="10" r="10"></circle>
+        {% if movies_not_seen_by_user|length > 10 %}
+          <text class="badge__text" x="1" y="14">{{ movies_not_seen_by_user|length }}</text>
+        {% else %}
+          <text class="badge__text" x="5" y="14">{{ movies_not_seen_by_user|length }}</text>
+        {% endif %}
+      </svg>
+    {% endif %}
+  </h3>
+  {% if movies_not_seen_by_user %}
+    <p class="group-queue__help-text">Please take the time to rate movies, that your friends have rated.</p>
   {% else %}
-    <div class="stats__no-movies">
-      <h3>You have not rated any movies yet.</h3>
-    </div>
+    <p class="group-queue__help-text">You are all caught up with movie ratings.</p>
   {% endif %}
+  <div class="group-queue__movie-list movie-list">
+    {% for movie in movies_not_seen_by_user %}
+    <div class="movie-list__movie">
+    <a class="movie-list__movie" style="background-image: url('{{ movie.poster_link }}')" href="{% url 'movie_detail' movie.imdb_id %}"></a>
+    </div>
+    {% empty %}
+    
+    {% endfor %}
   </div>
+</div>
 
 <h1>Movies Seen By User</h1>
 {% for movie in movies_seen_by_user %}
