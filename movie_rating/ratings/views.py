@@ -113,28 +113,6 @@ def dashboard(request):
     except AttributeError:
         group = None
 
-    if len(user_ratings) > 0:
-        # Best
-        best = {}
-        highest_rating = user_ratings.aggregate(Max('rating'))['rating__max']
-        best['movie'] = (Movie.objects.get(movie_id=user_ratings.get(rating=highest_rating).movie_id), highest_rating)
-        genre_averages = user_ratings.values('movie__genre').annotate(Avg('rating')).order_by('-rating__avg')
-        director_averages = user_ratings.values('movie__director').annotate(Avg('rating')).order_by('-rating__avg')
-        best['genre'] = (genre_averages[0]['movie__genre'], genre_averages[0]['rating__avg'])
-        best['director'] = (director_averages[0]['movie__director'], director_averages[0]['rating__avg'])
-
-        # Worst
-        worst = {}
-        lowest_rating = user_ratings.aggregate(Min('rating'))['rating__min']
-        worst['movie'] = (Movie.objects.get(movie_id=user_ratings.get(rating=highest_rating).movie_id), lowest_rating)
-        worst['genre'] = (genre_averages[len(genre_averages) - 1]['movie__genre'],
-                          genre_averages[len(genre_averages) - 1]['rating__avg'])
-        worst['director'] = (director_averages[len(director_averages) - 1]['movie__director'],
-                             director_averages[len(director_averages) - 1]['rating__avg'])
-    else:
-        best = None
-        worst = None
-
     movies_seen_by_others = []
     has_group = False
     if group is not None:
@@ -148,8 +126,6 @@ def dashboard(request):
     return render(request, 'ratings/dashboard.html', {
         'section': 'dashboard',
         'has_group': has_group,
-        'best': best,
-        'worst': worst,
         'movies_seen_by_user': movies_seen_by_user,
         'movies_seen_by_others': movies_seen_by_others,
         'movies_seen_by_both': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
