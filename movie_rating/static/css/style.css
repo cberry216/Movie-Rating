@@ -312,21 +312,59 @@ body {
 
 .movie-list {
 	height: 280px;
-	width: 100%;
+	width: calc(100% - 15px);
 	margin: 10px 0 10px 15px;
 	background-color: rgb(124, 124, 124);
 	border-top-left-radius: 3px;
 	border-bottom-left-radius: 3px;
 	box-shadow: inset 1px 0px 5px rgba(0, 0, 0, 0.5);
+	overflow-x: scroll;
 
 	display: flex;
 }
 
 .movie-list__movie {
-	height: 230px;
+	height: 260px;
 	width: 160px;
 	margin: 10px 10px 0 10px;
 	background-size: 160px 230px;
+
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 230px 30px;
+}
+
+.movie-list__poster {
+	width: 160px;
+	height: 230px;
+	margin: 0;
+	background-size: 160px 230px;
+	border-radius: 3px;
+	pointer-events: none;
+
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+}
+
+.movie-list__title {
+	width: 160px;
+	height: 25px;
+	margin: 2.5px 0;
+	color: black;
+
+	font-weight: 400;
+	font-size: 1.25em;
+	text-align: center;
+}
+
+.movie-list__movie:hover > .movie-list__poster {
+	/* box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5); */
+	/*TODO: Add hover option*/
+}
+
+.movie-list__movie:hover > .movie-list__title {
+	/* text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5); */
+	/*TODO: Add hover option*/
 }
 
 @keyframes slideoutLeft {

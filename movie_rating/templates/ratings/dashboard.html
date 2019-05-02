@@ -9,28 +9,31 @@
   <h3 class="group-queue__label">
     Group Queue
     {% if movies_not_seen_by_user %}
-      <svg class="badge">
-        <circle class="badge__circle" cx="10" cy="10" r="10"></circle>
-        {% if movies_not_seen_by_user|length > 10 %}
-          <text class="badge__text" x="1" y="14">{{ movies_not_seen_by_user|length }}</text>
-        {% else %}
-          <text class="badge__text" x="5" y="14">{{ movies_not_seen_by_user|length }}</text>
-        {% endif %}
-      </svg>
+    <svg class="badge">
+      <circle class="badge__circle" cx="10" cy="10" r="10"></circle>
+      {% if movies_not_seen_by_user|length > 10 %}
+      <text class="badge__text" x="1" y="14">{{ movies_not_seen_by_user|length }}</text>
+      {% else %}
+      <text class="badge__text" x="5" y="14">{{ movies_not_seen_by_user|length }}</text>
+      {% endif %}
+    </svg>
     {% endif %}
   </h3>
   {% if movies_not_seen_by_user %}
-    <p class="group-queue__help-text">Please take the time to rate movies, that your friends have rated.</p>
+  <p class="group-queue__help-text">Please take the time to rate movies, that your friends have rated.</p>
   {% else %}
-    <p class="group-queue__help-text">You are all caught up with movie ratings.</p>
+  <p class="group-queue__help-text">You are all caught up with movie ratings.</p>
   {% endif %}
   <div class="group-queue__movie-list movie-list">
     {% for movie in movies_not_seen_by_user %}
-    <div class="movie-list__movie">
-    <a class="movie-list__movie" style="background-image: url('{{ movie.poster_link }}')" href="{% url 'movie_detail' movie.imdb_id %}"></a>
-    </div>
+    <a href="{% url 'movie_detail' movie.imdb_id %}" class="movie-list__movie">
+      <div class="movie-list__poster" style="background-image: url('{{ movie.poster_link }}')"></div>
+      <p class="movie-list__title">{{ movie.title }}</p>
+    </a>
     {% empty %}
-    
+    <div class="movie-list__movie--empty">
+      <p>No Movies to Rate</p>
+    </div>
     {% endfor %}
   </div>
 </div>
