@@ -4,7 +4,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Avg, Max, Min, Sum
 from django.shortcuts import render, redirect
 
-from .forms import SearchForm, UserRegistrationForm
+from .forms import (
+    SearchForm,
+    UserRegistrationForm,
+    RateMovieForm
+)
 from .helpers import (
     get_item_or_none,
     get_item_or_none_from_queryset,
@@ -15,6 +19,7 @@ from .models import (
     Movie,
     Rating,
     Group,
+    Rating,
 )
 
 # Create your views here.
@@ -101,6 +106,29 @@ def movie_detail(request, imdb_id):
 def rate_movie(request, imdb_id):
     if user_has_rated_movie(request.user, Movie.objects.get(imdb_id=imdb_id)):
         return redirect('movie_detail', imdb_id=imdb_id)
+
+    movie = Movie.objects.get(imdb_id=imdb_id)
+
+    if request.method == 'POST':
+        form = RateMovieForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            rating = Rating(
+                user=request.user,
+                movie=movie,
+                rating=cd['rating'],
+                comment=cd['comment']
+            )
+            rating.save()
+
+            return render(request, 'ratings/rate_movie_success.html')
+    else:
+        form = RateMovieForm()
+        return render(request, 'ratings/rate_movie.html', {
+            'form': form,
+            'movie': movie
+        })
 
 
 @login_required
