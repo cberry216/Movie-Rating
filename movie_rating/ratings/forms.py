@@ -22,5 +22,12 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
 
-class RateMovieForm(forms.form):
-    rating = forms.IntegerField()
+class RateMovieForm(forms.Form):
+    rating = forms.FloatField()
+    comment = forms.CharField()
+
+    def clean_rating(self):
+        cd = self.cleaned_data
+        if cd['rating'] < 0 or cd['rating'] > 10:
+            raise forms.ValidationError('Rating must be between 0 and 10.')
+        return cd['rating']
