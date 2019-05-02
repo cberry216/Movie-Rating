@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import User
+from .models import User, Rating
 
 
 class SearchForm(forms.Form):
@@ -22,9 +22,10 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
 
-class RateMovieForm(forms.Form):
-    rating = forms.FloatField()
-    comment = forms.CharField()
+class RateMovieForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ('rating', 'comment')
 
     def clean_rating(self):
         cd = self.cleaned_data
