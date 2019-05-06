@@ -55,7 +55,7 @@ def search_movie(request):
             query = search_form.cleaned_data['query']
             omdb_endpoint = f'http://www.omdbapi.com/?apikey=225ea357&type=movie&s='
             omdb_call = omdb_endpoint + query
-            omdb_resp = requests.get(omdb_endpoint + query)
+            omdb_resp = requests.get(omdb_call)
             omdb_resp = omdb_resp.json()
             if omdb_resp['Response'] == 'True':
                 found_results = True
