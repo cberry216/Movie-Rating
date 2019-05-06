@@ -26,7 +26,7 @@
   {% endif %}
   <div class="group-queue__movie-list movie-list">
     {% for movie in movies_not_seen_by_user %}
-    <a href="{% url 'movie_detail' movie.imdb_id %}" class="movie-list__movie">
+    <a href="{% url 'rate_movie' movie.imdb_id %}" class="movie-list__movie">
       <div class="movie-list__poster" style="background-image: url('{{ movie.poster_link }}')"></div>
       <p class="movie-list__title">{{ movie.title }}</p>
     </a>
