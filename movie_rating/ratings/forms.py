@@ -25,7 +25,7 @@ class UserRegistrationForm(forms.ModelForm):
 class RateMovieForm(forms.ModelForm):
     class Meta:
         model = Rating
-        fields = ('rating', 'comment')
+        fields = '__all__'
 
     def clean_rating(self):
         cd = self.cleaned_data
