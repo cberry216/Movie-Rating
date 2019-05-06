@@ -7,7 +7,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('rate-movie/', search_movie, name='search_movie'),
     path('rate-movie/<imdb_id>', rate_movie, name='rate_movie'),
+    path('search-movie/', search_movie, name='search_movie'),
     path('<imdb_id>/', movie_detail, name='movie_detail'),
 ]
