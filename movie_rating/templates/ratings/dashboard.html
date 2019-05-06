@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% if movies_not_seen_by_user %} | *{% endif %}{% endblock title %}
+{% block title %}Dashboard{% if movies_not_seen_by_user %} |
+{{ movies_not_seen_by_user|length }}*{% endif %}{% endblock title %}
 
 
 {% block content %}
