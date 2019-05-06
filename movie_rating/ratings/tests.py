@@ -310,7 +310,7 @@ class ViewsTestCase(TestCase):
     def test_search_movie_view(self):
         self.client.login(username='abc', password='password')
         self.assertTrue(self.user1.is_authenticated)
-        response = self.client.get('/movie/rate-movie/', follow=True)
+        response = self.client.get('/movie/search-movie/', follow=True)
         self.assertEqual(response.status_code, 200)
         correctUnratedMovies = [self.movie3]
         self.assertEqual(response.context['unrated_group_movies'], correctUnratedMovies)
@@ -498,9 +498,9 @@ class HeadlessTestCase(StaticLiveServerTestCase):
         self.assertEqual(f'{self.live_server_url}/', self.driver.current_url)
 
     def test_search_movie_unauthorized_headless(self):
-        # Going to rate-movie without being logged in should redirect to login
-        self.driver.get(f'{self.live_server_url}/movie/rate-movie/')
-        self.assertEqual(f'{self.live_server_url}/user/login/?next=/movie/rate-movie/', self.driver.current_url)
+        # Going to search-movie without being logged in should redirect to login
+        self.driver.get(f'{self.live_server_url}/movie/search-movie/')
+        self.assertEqual(f'{self.live_server_url}/user/login/?next=/movie/search-movie/', self.driver.current_url)
 
         # Login with headless browser
         ui = self.driver.find_element_by_css_selector('input#id_username')
@@ -512,8 +512,8 @@ class HeadlessTestCase(StaticLiveServerTestCase):
         ls = self.driver.find_element_by_css_selector('input#login_submit')
         ls.click()
 
-        # After login, next should redirect to rate-movie
-        self.assertEqual(f'{self.live_server_url}/movie/rate-movie/', self.driver.current_url)
+        # After login, next should redirect to searcg-movie
+        self.assertEqual(f'{self.live_server_url}/movie/searcg-movie/', self.driver.current_url)
         unrated_movies = self.driver.find_elements_by_css_selector('.unrated_movie')
         self.assertEqual(1, len(unrated_movies))
         unrated_movie = unrated_movies[0]
