@@ -85,7 +85,7 @@ def movie_detail(request, imdb_id):
 
     group = get_item_or_none(Group, group_id=request.user.group.group_id)
     if group is not None:
-        group_query = group.users.exclude(user=request.user)
+        group_query = group.users.exclude(user_id=request.user.user_id)
         if len(group_query) > 0:
             for member in group_query:
                 group_members.append(member.username)
