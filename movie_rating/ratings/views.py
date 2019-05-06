@@ -63,6 +63,7 @@ def search_movie(request):
                 if int(omdb_resp['totalResults']) > 10:
                     has_next_page = True
     return render(request, 'ratings/search_movie.html', {
+        'section': 'search',
         'search_form': search_form,
         'query': query,
         'found_results': found_results,
