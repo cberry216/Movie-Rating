@@ -111,20 +111,12 @@ def rate_movie(request, imdb_id):
 
     if request.method == 'POST':
         form = RateMovieForm(request.POST)
+
         if form.is_valid():
-            cd = form.cleaned_data
-
-            rating = Rating(
-                user=request.user,
-                movie=movie,
-                rating=cd['rating'],
-                comment=cd['comment']
-            )
-            rating.save()
-
+            form.save()
             return render(request, 'ratings/rate_movie_success.html')
     else:
-        form = RateMovieForm()
+        form = RateMovieForm(initial={'movie': movie, 'user': request.user})
         return render(request, 'ratings/rate_movie.html', {
             'form': form,
             'movie': movie
