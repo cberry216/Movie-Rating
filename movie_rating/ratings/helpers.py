@@ -31,3 +31,8 @@ def get_unrated_movies_from_group(user):
 def user_has_rated_movie(user, movie):
     user_rating_for_movie = get_item_or_none(Rating, user=user, movie=movie)
     return user_rating_for_movie is not None
+
+
+def movie_in_database(imdb_id):
+    movie = get_item_or_none(Movie, imdb_id=imdb_id)
+    return movie is not None
