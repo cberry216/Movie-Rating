@@ -63,7 +63,7 @@ def search_movie(request):
                 results = omdb_resp['Search']
                 if int(omdb_resp['totalResults']) > 10:
                     has_next_page = True
-                total_results = omdb_resp['totalResults']
+                total_results = int(omdb_resp['totalResults'])
     return render(request, 'ratings/search_movie.html', {
         'section': 'search',
         'search_form': search_form,
@@ -71,7 +71,8 @@ def search_movie(request):
         'found_results': found_results,
         'results': results,
         'has_next_page': has_next_page,
-        'unrated_group_movies': get_unrated_movies_from_group(request.user)
+        'unrated_group_movies': get_unrated_movies_from_group(request.user),
+        'total_results': total_results
     })
 
 
