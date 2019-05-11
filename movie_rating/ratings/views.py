@@ -49,6 +49,7 @@ def search_movie(request):
     found_results = False
     results = []
     has_next_page = False
+    total_results = 0
     if 'query' in request.GET:
         search_form = SearchForm(request.GET)
         if search_form.is_valid():
@@ -62,6 +63,7 @@ def search_movie(request):
                 results = omdb_resp['Search']
                 if int(omdb_resp['totalResults']) > 10:
                     has_next_page = True
+                total_results = omdb_resp['totalResults']
     return render(request, 'ratings/search_movie.html', {
         'section': 'search',
         'search_form': search_form,
