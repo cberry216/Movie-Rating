@@ -71,7 +71,7 @@ def search_movie(request):
             if omdb_resp['Response'] == 'True':
                 found_results = True
                 results = omdb_resp['Search']
-                if int(omdb_resp['totalResults']) > 10:
+                if int(omdb_resp['totalResults']) > 10 * (int(page) + 1):
                     has_next_page = True
                 total_results = int(omdb_resp['totalResults'])
                 max_page = ceil(total_results / 10)
