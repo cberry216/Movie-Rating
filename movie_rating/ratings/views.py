@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Avg, Max, Min, Sum
 from django.shortcuts import render, redirect
 
+from math import ceil
+
 from .forms import (
     SearchForm,
     UserRegistrationForm,
@@ -49,6 +51,8 @@ def search_movie(request):
     found_results = False
     results = []
     has_next_page = False
+    page = 1
+    max_page = 1
     total_results = 0
     if 'query' in request.GET:
         search_form = SearchForm(request.GET)
@@ -56,6 +60,9 @@ def search_movie(request):
             query = search_form.cleaned_data['query']
             omdb_endpoint = f'http://www.omdbapi.com/?apikey=225ea357&type=movie&s='
             omdb_call = omdb_endpoint + query
+            if 'page' in request.GET:
+                page = request.GET['page']
+                omdb_call += '&page=' + page
             omdb_resp = requests.get(omdb_call)
             omdb_resp = omdb_resp.json()
             if omdb_resp['Response'] == 'True':
@@ -64,6 +71,7 @@ def search_movie(request):
                 if int(omdb_resp['totalResults']) > 10:
                     has_next_page = True
                 total_results = int(omdb_resp['totalResults'])
+                max_page = ceil(total_results / 10)
     return render(request, 'ratings/search_movie.html', {
         'section': 'search',
         'search_form': search_form,
@@ -71,6 +79,8 @@ def search_movie(request):
         'found_results': found_results,
         'results': results,
         'has_next_page': has_next_page,
+        'page': page,
+        'max_page': max_page,
         'unrated_group_movies': get_unrated_movies_from_group(request.user),
         'total_results': total_results
     })
