@@ -79,6 +79,7 @@ class Movie(models.Model):
         ('PG-13', 'PG-13'),
         ('R', 'R'),
         ('NC-17', 'NC-17'),
+        ('N/A', 'N/A')
     ]
     movie_id = models.AutoField(primary_key=True)
     imdb_id = models.CharField(max_length=12)
@@ -92,7 +93,7 @@ class Movie(models.Model):
         blank=True
     )
     released = models.DateField()
-    runtime_minutes = models.IntegerField()
+    runtime_minutes = models.IntegerField(null=True, blank=True)
     genre = models.CharField(max_length=20, null=True, blank=True)
     director = models.CharField(max_length=80, null=True, blank=True)
     plot = models.TextField(null=True, blank=True)
