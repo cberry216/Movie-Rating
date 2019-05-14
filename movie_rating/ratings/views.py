@@ -16,6 +16,9 @@ from .helpers import (
     get_item_or_none_from_queryset,
     get_unrated_movies_from_group,
     user_has_rated_movie,
+    user_has_rated_movie_by_id,
+    movie_in_database,
+    parse_movie_json,
 )
 from .models import (
     Movie,
@@ -118,17 +121,25 @@ def movie_detail(request, imdb_id):
 
 @login_required
 def rate_movie(request, imdb_id):
-    if user_has_rated_movie(request.user, Movie.objects.get(imdb_id=imdb_id)):
+    if user_has_rated_movie_by_id(request.user, imdb_id):
         return redirect('movie_detail', imdb_id=imdb_id)
 
-    movie = Movie.objects.get(imdb_id=imdb_id)
+    if movie_in_database(imdb_id):
+        movie = Movie.objects.get(imdb_id=imdb_id)
+    else:
+        omdb_endpoint = f'http://www.omdbapi.com/?apikey=225ea357&type=movie&i='
+        omdb_call = omdb_endpoint + imdb_id
+        omdb_resp = requests.get(omdb_call)
+        omdb_resp = omdb_resp.json()
+        if omdb_resp['Response'] == 'True':
+            movie = parse_movie_json(omdb_resp)
+            movie.save()
 
     if request.method == 'POST':
         form = RateMovieForm(request.POST)
 
         if form.is_valid():
             form.save()
-            # return render(request, 'ratings/rate_movie_success.html')
             return redirect('movie_detail', imdb_id=imdb_id)
     else:
         form = RateMovieForm(initial={'movie': movie, 'user': request.user})
