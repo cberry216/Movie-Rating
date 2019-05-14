@@ -53,11 +53,17 @@ def parse_movie_json(omdb_resp):
     # CHAR - NOT NULL - ex. "The Curious Case of Benjamin Button"
     title = omdb_resp['Title']
 
-    # CHAR - NOT NULL - ex. "PG"
-    rated = omdb_resp['Rated']
+    # CHAR - NULL - ex. "PG"
+    if omdb_resp['Rated'] != 'N/A':
+        rated = omdb_resp['Rated']
+    else:
+        rated = 'N/A'
 
     # DATE - NOT NULL - ex. "09 May 2019"
-    released = datetime.strptime(omdb_resp['Released'], "%d %b %Y")
+    if omdb_resp['Released'] != 'N/A':
+        released = datetime.strptime(omdb_resp['Released'], "%d %b %Y")
+    else:
+        released = datetime.strptime(omdb_resp['Year'], '%Y')
 
     # INTEGER - NOT NULL - ex. "104 min"
     runtime_minutes = int(omdb_resp['Runtime'].split(' ')[0])
