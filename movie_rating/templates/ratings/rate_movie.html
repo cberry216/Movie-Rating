@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="rating">
-  <div class="rating__movie" style="background-image: url({{ movie.poster_link }})"></div>
+  <div class="rating__movie" style="{% if movie.poster_link %}background-image: url({{ movie.poster_link }}) {% else %} background-color: grey; {% endif%}"></div>
   <form class="rate_form" action="./{{ movie.imdb_id}}" method="post">
     <h1 class="rate_form__title">{{ movie.title }}</h1>
     {% csrf_token %}
