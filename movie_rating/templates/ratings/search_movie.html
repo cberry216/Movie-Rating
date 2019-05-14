@@ -47,6 +47,7 @@
   </a>
 </div>
 {% endif %}
+{% if user.group %}
 <h2 class="movies-unrated">Rate a Movie From "{{ user.group.group_name }}"</h2>
 <div class="unrated-movies">
   {% for movie in unrated_group_movies %}
@@ -59,4 +60,5 @@
   {% empty %}
   {% endfor %}
 </div>
+{% endif %}
 {% endblock content %}
