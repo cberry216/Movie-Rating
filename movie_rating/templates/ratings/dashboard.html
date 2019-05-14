@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="group-queue">
-  <h3 class="group-queue__label">
+  <a href="#" class="group-queue__label">
     Group Queue
     {% if movies_not_seen_by_user %}
     <svg class="badge">
@@ -19,7 +19,7 @@
       {% endif %}
     </svg>
     {% endif %}
-  </h3>
+  </a>
   {% if movies_not_seen_by_user %}
   <p class="group-queue__help-text">Please take the time to rate movies, that your friends have rated.</p>
   {% else %}
@@ -33,41 +33,28 @@
     </a>
     {% empty %}
     <div class="movie-list__movie--empty">
-      <p>No Movies to Rate</p>
+      <p>You have no movies to rate.</p>
     </div>
     {% endfor %}
   </div>
 </div>
 
-<h1>Movies Seen By User</h1>
-{% for movie in movies_seen_by_user %}
-<p>{{ movie.title }}</p>
-{% empty %}
-<p>No rated movies</p>
-{% endfor %}
+<div class="seen-movies">
+  <a href="#" class="seen-movies__label">Movies You've Seen</a>
+  <p class="seen-movies__help-text">View movies that you have rated.</p>
+  <div class="seen-movies__movie-list movie-list">
+    {% for movie in movies_seen_by_user %}
+    <a href="{% url 'movie_detail' movie.imdb_id %}" class="movie-list__movie">
+      <div class="movie-list__poster" style="background-image: url('{{ movie.poster_link }}')"></div>
+      <p class="movie-list__title">{{ movie.title }}</p>
+    </a>
+    {% empty %}
+    <div class="movie-list__movie--empty">
+      <p>You have not rated any movies.</p>
+      <a href="{% url 'search_movie' %}">Find a movie to rate.</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
-{% if has_group %}
-<h1>Movies Seen By Your Group Members</h1>
-{% for movie in movies_seen_by_others %}
-<p>{{ movie.title }}</p>
-{% empty %}
-<p>You have not</p>
-{% endfor %}
-{% else %}
-<h1>You are not part of a group</h1>
-{% endif %}
-
-<h1>Rated Movies</h1>
-{% for movie in movies_seen_by_both %}
-<p>{{ movie.title }}</p>
-{% empty %}
-<p>You have not rated any movies</p>
-{% endfor %}
-
-<h1>Unrated Movies</h1>
-{% for movie in movies_not_seen_by_user %}
-<p>{{ movie.title }}</p>
-{% empty %}
-<p>You have no unrated movies</p>
-{% endfor %}
 {% endblock content %}

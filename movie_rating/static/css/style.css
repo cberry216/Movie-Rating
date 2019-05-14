@@ -260,10 +260,12 @@ body {
 	color: #960500;
 }
 
-.group-queue {
+.group-queue,
+.seen-movies {
 	height: 386px;
 	width: 100%;
 	margin-top: 15px;
+	margin-bottom: 25px;
 	color: white;
 
 	display: grid;
@@ -271,12 +273,20 @@ body {
 	grid-template-rows: 46px 40px 300px;
 }
 
-.group-queue__label {
+.group-queue__label,
+.seen-movies__label {
 	position: relative;
 	margin: 2px 0 4px 10px;
+	color: white;
 
 	font-size: 2em;
 	font-weight: 400;
+	text-decoration: none;
+}
+
+.group-queue__label:hover,
+.seen-movies__label:hover {
+	text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
 }
 
 .badge {
@@ -298,7 +308,8 @@ body {
 	font-size: 14px;
 }
 
-.group-queue__help-text {
+.group-queue__help-text,
+.seen-movies__help-text {
 	color: rgb(163, 163, 163);
 	margin: 10px 0 11px 15px;
 
@@ -334,6 +345,24 @@ body {
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: 230px 30px;
+}
+
+.movie-list__movie--empty {
+	margin: auto;
+	color: white;
+
+	font-size: 2em;
+	font-weight: 200;
+	text-align: center;
+}
+
+.movie-list__movie--empty a {
+	color: black;
+	font-size: 0.7em;
+}
+
+.movie-list__movie--empty a:hover {
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .movie-list__poster {
