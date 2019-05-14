@@ -65,8 +65,11 @@ def parse_movie_json(omdb_resp):
     else:
         released = datetime.strptime(omdb_resp['Year'], '%Y')
 
-    # INTEGER - NOT NULL - ex. "104 min"
-    runtime_minutes = int(omdb_resp['Runtime'].split(' ')[0])
+    # INTEGER - NULL - ex. "104 min"
+    if omdb_resp['Runtime'] != 'N/A':
+        runtime_minutes = int(omdb_resp['Runtime'].split(' ')[0])
+    else:
+        runtime_minutes = None
 
     # CHAR - NULL - ex. "Action, Adventure"
     if omdb_resp['Genre'] != 'N/A':
