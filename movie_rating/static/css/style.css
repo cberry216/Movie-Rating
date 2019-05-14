@@ -486,6 +486,145 @@ input[type='number']::-webkit-outer-spin-button {
 	margin: 0;
 }
 
+.search-form {
+	width: 90%;
+	height: 50px;
+	margin: 10px 5% 0 5%;
+	padding-bottom: 5px;
+	border-bottom: 1px solid white;
+}
+
+#search-form__query {
+	width: 100%;
+
+	display: grid;
+	grid-template-columns: 1fr 50px;
+	grid-template-rows: 50px;
+}
+
+.search-form__submit {
+	padding: 0;
+	border: none;
+
+	cursor: pointer;
+
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+
+	background-color: #242424;
+}
+
+.search-icon {
+	width: 50px;
+	height: 50px;
+}
+
+#search-form__query input {
+	width: calc(100% - 15px);
+	height: 50px;
+	padding-left: 15px;
+	background-color: #242424;
+	color: white;
+	border: none;
+
+	font-size: 1.3em;
+	font-family: 'American Typewriter', sans-serif;
+	letter-spacing: 1px;
+	text-align: center;
+
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+}
+
+#search-form__query input:focus {
+	border: none;
+}
+
+.results-found {
+	margin-left: 3vw;
+	color: white;
+
+	font-weight: 200;
+}
+
+.search-results,
+.unrated-movies {
+	width: 95vw;
+	margin: 10px 2.5vw 50px 2.5vw;
+
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-between;
+}
+
+.search-results__movie,
+.unrated-movies__movie {
+	text-decoration-color: white;
+	margin-bottom: 20px;
+}
+
+.search-results__movie .movie-list__title,
+.unrated-movies__movie .movie-list__title {
+	color: white;
+}
+
+.search-results__movie:hover > .movie-list__title,
+.unrated-movies__movie:hover > .movie-list__title {
+	text-shadow: 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.pages {
+	width: 200px;
+	height: 50px;
+	margin: 10px calc(50vw - 25px);
+
+	display: grid;
+	grid-template-columns: 50px 100px 50px;
+}
+
+.pages__page {
+	width: 50px;
+	height: 50px;
+}
+
+.prev-page {
+	grid-column: 1 / 2;
+}
+
+.pages__number {
+	margin: auto;
+	color: white;
+
+	grid-column: 2 / 3;
+}
+
+.pages__number a {
+	color: white;
+}
+
+.pages__page svg polyline {
+	stroke: white;
+}
+
+.pages__page--deactivated {
+	pointer-events: none;
+}
+
+.pages__page--deactivated svg polyline {
+	stroke: grey;
+}
+
+.next-page {
+	grid-column: 3 / 4;
+}
+
+.movies-unrated {
+	margin-left: 3vw;
+	color: white;
+
+	font-weight: 200;
+}
+
 @keyframes slideoutLeft {
 	from {
 		left: 0px;

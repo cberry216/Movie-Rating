@@ -3,20 +3,56 @@
 {% block title %}Search{% endblock title %}
 
 {% block content %}
-<form action="." method="get">
+<form class="search-form" action="." method="get">
   {% csrf_token %}
-  {{ search_form.as_p }}
+  {{ search_form.non_field_errors }}
+  <div class="search-form__field-wrapper" id="search-form__query">
+    <button type="submit" class="search-form__submit">
+      <svg class="search-icon">
+        <polygon points="5,40 20,25 25,30 10,45" fill="white" stroke="white"></polygon>
+        <circle cx="30" cy="20" r="15" fill="white" stroke="white"></circle>
+        <circle cx="30" cy="20" r="10" fill="#242424" stroke="#242424"></circle>
+      </svg>
+    </button>
+    {{ search_form.query }}
+  </div>
 </form>
-{% for movie in results %}
-<p>{{ movie.Title }}</p>
-{% empty %}
 {% if query %}
-<p>No results returned</p>
+<h1 class="results-found">{{ total_results }} Result{{ total_results|pluralize }} Found</h1>
+<div class="search-results">
+  {% for movie in results %}
+  <a href="{% url 'rate_movie' movie.imdbID %}" class="movie-list__movie search-results__movie">
+    <div class="movie-list__poster"
+      style="{% if movie.Poster != 'N/A' %}background-image: url('{{ movie.Poster }}'){% else %}background-color: grey{% endif %}">
+    </div>
+    <p class="movie-list__title">{{ movie.Title|truncatechars:23 }}</p>
+  </a>
+  {% endfor %}
+</div>
+<div class="pages">
+    <a href="{% url 'search_movie' %}?{{ request.GET.urlencode }}&page={{ page|add:'-1'}}" class="pages__page prev-page {% if page == 1 %}pages__page--deactivated{% endif %}">
+      <svg>
+        <polyline points="47,3 3,25 47,47" fill="none" stroke-width="3px"></polyline>
+      </svg>
+    </a>
+    <p class="pages__number">{{ page }} of <a href="{% url 'search_movie' %}?{{ request.GET.urlencode }}&page={{ max_page }}">{{ max_page }}</a></p>
+    <a href="{% url 'search_movie' %}?{{ request.GET.urlencode }}&page={{ page|add:'1'}}" class="pages__page next-page {% if not has_next_page %}pages__page--deactivated{% endif %}">
+      <svg>
+        <polyline points="3,3 47,25 3,47" fill="none" stroke-width="3px"></polyline>
+      </svg>
+    </a>
+</div>
 {% endif %}
-{% endfor %}
-{% for movie in unrated_group_movies %}
-<p class="unrated_movie">{{ movie.title }}</p>
-{% empty %}
-
-{% endfor %}
+<h2 class="movies-unrated">Rate a Movie From "{{ user.group.group_name }}"</h2>
+<div class="unrated-movies">
+  {% for movie in unrated_group_movies %}
+  <a href="{% url 'rate_movie' movie.imdb_id %}" class="movie-list__movie unrated-movies__movie">
+    <div class="movie-list__poster"
+      style="{% if movie.poster_link %}background-image: url('{{ movie.poster_link }}'){% else %}background-color: grey{% endif %}">
+    </div>
+    <p class="movie-list__title">{{ movie.title|truncatechars:25 }}</p>
+  </a>
+  {% empty %}
+  {% endfor %}
+</div>
 {% endblock content %}
