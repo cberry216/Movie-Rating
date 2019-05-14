@@ -562,7 +562,6 @@ input[type='number']::-webkit-outer-spin-button {
 	display: flex;
 	flex-wrap: wrap;
 	align-content: space-between;
-	/* justify-content: space-between; */
 }
 
 .search-results__movie,
