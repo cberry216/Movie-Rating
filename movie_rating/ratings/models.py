@@ -97,7 +97,7 @@ class Movie(models.Model):
     director = models.CharField(max_length=80, null=True, blank=True)
     plot = models.TextField(null=True, blank=True)
     poster_link = models.CharField(max_length=250, null=True, blank=True)
-    imdb_rating = models.FloatField(null=True, blank=True)
+    imdb_rating = models.DecimalField(null=True, blank=True, max_digits=2, decimal_places=1)
     rt_rating = models.IntegerField(null=True, blank=True)
     added_to_db = models.DateTimeField(auto_now_add=True)
 
