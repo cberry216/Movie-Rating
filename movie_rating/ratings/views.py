@@ -100,7 +100,10 @@ def movie_detail(request, imdb_id):
     movie_ratings = Rating.objects.filter(movie__imdb_id=imdb_id)
     user_rating = movie_ratings.get(user=request.user).rating
 
-    group = get_item_or_none(Group, group_id=request.user.group.group_id)
+    try:
+        group = get_item_or_none(Group, group_id=request.user.group.group_id)
+    except AttributeError:
+        group = None
     if group is not None:
         group_query = group.users.exclude(user_id=request.user.user_id)
         if len(group_query) > 0:
