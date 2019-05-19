@@ -1,7 +1,13 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
+
+
+def validate_rating(value):
+    if value < 0 or value > 10:
+        raise ValidationError("Rating must be between 0.0 and 10.0.")
 
 
 class Group(models.Model):
@@ -118,6 +124,6 @@ class Rating(models.Model):
         related_name='ratings',
         on_delete=models.CASCADE
     )
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    rating = models.FloatField(validators=[validate_rating])
     comment = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
