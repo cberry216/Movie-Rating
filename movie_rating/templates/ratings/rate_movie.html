@@ -5,30 +5,29 @@
 {% block content %}
 <div class="rating">
   <div class="rating__movie" style="{% if movie.poster_link %}background-image: url({{ movie.poster_link }}) {% else %} background-color: grey; {% endif%}"></div>
-  <form class="rate_form" action="./{{ movie.imdb_id}}" method="post">
-    <h1 class="rate_form__title">{{ movie.title }}</h1>
+  <form class="rate-form" action="./{{ movie.imdb_id}}" method="post">
+    <h1 class="rate-form__title">{{ movie.title }}</h1>
     {% csrf_token %}
-    {{ form.non_field_errors }}
-    <div class="rate_form__field_wrapper" id="rate_form__rating">
-      {{ form.rating.errors}}
+    <div class="rate-form__field_wrapper" id="rate-form__rating">
       <label for="{{ form.rating.id_for_label}}">Rating*</label>
       {{ form.rating }}
+      {{ form.rating.errors}}
     </div>
-    <div class="rate_form__field_wrapper" id="rate_form__comment">
+    <div class="rate-form__field_wrapper" id="rate-form__comment">
       {{ form.comment.errors }}
       <label for="{{ form.comment.id_for_label }}">Comments</label>
       {{ form.comment }}
     </div>
-    <div class="rate_form__field_wrapper rate_form__field_wrapper--hidden" id="rate_form__movie">
+    <div class="rate-form__field_wrapper rate-form__field_wrapper--hidden" id="rate-form__movie">
       {{ form.movie.errors }}
       {{ form.movie }}
     </div>
-    <div class="rate_form__field_wrapper rate_form__field_wrapper--hidden" id="rate_form__user">
+    <div class="rate-form__field_wrapper rate-form__field_wrapper--hidden" id="rate-form__user">
       {{ form.user.errors }}
       {{ form.user }}
     </div>
     <p style="color: white">* = required</p>
-    <input class="rate_form__submit" type="submit" value="Rate">
+    <input class="rate-form__submit" type="submit" value="Rate">
   </form>
 </div>
 {% endblock content %}
