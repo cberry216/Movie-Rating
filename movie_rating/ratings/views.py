@@ -146,10 +146,11 @@ def rate_movie(request, imdb_id):
             return redirect('movie_detail', imdb_id=imdb_id)
     else:
         form = RateMovieForm(initial={'movie': movie, 'user': request.user})
-        return render(request, 'ratings/rate_movie.html', {
-            'form': form,
-            'movie': movie
-        })
+        
+    return render(request, 'ratings/rate_movie.html', {
+        'form': form,
+        'movie': movie
+    })
 
 
 @login_required
