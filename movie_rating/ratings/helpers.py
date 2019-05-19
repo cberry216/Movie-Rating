@@ -96,7 +96,7 @@ def parse_movie_json(omdb_resp):
         poster_link = None
 
     # DECIMAL - NULL - ex: "9.3"
-    if omdb_resp['imdbRating']:
+    if omdb_resp['imdbRating'] != 'N/A':
         imdb_rating = float(omdb_resp['imdbRating'])
     else:
         imdb_rating = None
