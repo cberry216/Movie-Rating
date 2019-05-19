@@ -111,7 +111,7 @@ def movie_detail(request, imdb_id):
                 group_members.append(member.username)
                 rating = get_item_or_none_from_queryset(movie_ratings, user=request.user)
                 group_ratings[member.username] = None if rating is None else rating.rating
-    global_rating = movie_ratings.aggregate(avg_rating=Avg('rating'))['avg_rating']
+    global_rating = float("{0:.1f}".format(movie_ratings.aggregate(avg_rating=Avg('rating'))['avg_rating']))
     movie = Movie.objects.get(imdb_id=imdb_id)
     return render(request, 'ratings/movie_detail.html', {
         'user_rating': user_rating,
@@ -146,7 +146,7 @@ def rate_movie(request, imdb_id):
             return redirect('movie_detail', imdb_id=imdb_id)
     else:
         form = RateMovieForm(initial={'movie': movie, 'user': request.user})
-        
+
     return render(request, 'ratings/rate_movie.html', {
         'form': form,
         'movie': movie
