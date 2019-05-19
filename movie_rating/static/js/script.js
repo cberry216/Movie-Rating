@@ -10,6 +10,7 @@ function setRatingColor() {
 function setDeltaColor() {
   console.log('Setting delta colors...');
   let ratingDiffs = document.querySelectorAll('.rating__diff');
+  let memberRatingDiffs = document.querySelectorAll('.member-rating__diff');
   for(let i = 0; i < ratingDiffs.length; i++) {
     let text = ratingDiffs[i].innerHTML;
     let value = Number.parseFloat(text);
@@ -18,6 +19,16 @@ function setDeltaColor() {
     }
     else {
       ratingDiffs[i].classList.toggle('rating__diff--negative');
+    }
+  }
+  for (let i = 0; i < memberRatingDiffs.length; i++) {
+    let text = memberRatingDiffs[i].innerHTML;
+    let value = Number.parseFloat(text);
+    if (value >= 0) {
+      memberRatingDiffs[i].classList.toggle('rating__diff--positive');
+    }
+    else {
+      memberRatingDiffs[i].classList.toggle('rating__diff--negative');
     }
   }
 }
