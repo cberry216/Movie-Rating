@@ -10,4 +10,4 @@ def strip_page(querystring):
 
 @register.simple_tag
 def minus(a, b):
-    return "{0:1f}".format(float(a) - float(b))
+    return "{0:.1f}".format(float(a) - float(b))
