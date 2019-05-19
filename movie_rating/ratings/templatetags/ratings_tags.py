@@ -16,3 +16,8 @@ def minus(a, b):
 @register.simple_tag
 def minus_percentage(value, percentage):
     return "{:+2d}".format(int(value * 10) - percentage)
+
+
+@register.simple_tag
+def member_rating(rating_dict, member_name):
+    return rating_dict[member_name]
