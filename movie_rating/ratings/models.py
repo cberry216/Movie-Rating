@@ -10,6 +10,11 @@ def validate_rating(value):
         raise ValidationError("Rating must be between 0.0 and 10.0.")
 
 
+def validate_rating_length(value):
+    if len(str(value).split('.')) > 1 and len(str(value).split('.')[1]) > 1:
+        raise ValidationError("Rating can only have one decimal place.")
+
+
 class Group(models.Model):
     group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=60, unique=True)
@@ -124,6 +129,6 @@ class Rating(models.Model):
         related_name='ratings',
         on_delete=models.CASCADE
     )
-    rating = models.FloatField(validators=[validate_rating])
+    rating = models.FloatField(validators=[validate_rating, validate_rating_length])
     comment = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
