@@ -11,3 +11,8 @@ def strip_page(querystring):
 @register.simple_tag
 def minus(a, b):
     return "{0:.1f}".format(float(a) - float(b))
+
+
+@register.simple_tag
+def minus_percentage(value, percentage):
+    return int(value * 10) - percentage
