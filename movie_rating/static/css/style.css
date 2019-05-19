@@ -404,7 +404,8 @@ body {
 	grid-template-rows: calc(100vh - 68px);
 }
 
-.rating__movie {
+.rating__movie,
+.detail__poster {
 	height: 0;
 	margin-left: 15%;
 	padding-top: 100%;
@@ -418,7 +419,7 @@ body {
 	grid-row: 1 / 2;
 }
 
-.rate_form {
+.rate-form {
 	width: 42vw;
 	margin: 20% 4vw;
 
@@ -429,14 +430,14 @@ body {
 	grid-row: 1 / 2;
 }
 
-.rate_form__title {
+.rate-form__title {
 	color: white;
 
 	font-weight: 200;
 	text-align: center;
 }
 
-.rate_form__field_wrapper {
+.rate-form__field_wrapper {
 	margin: 20px 0;
 
 	/* text-align: center; */
@@ -445,11 +446,11 @@ body {
 	flex-direction: column;
 }
 
-.rate_form__field_wrapper--hidden {
+.rate-form__field_wrapper--hidden {
 	display: none;
 }
 
-#rate_form__rating input {
+#rate-form__rating input {
 	width: 40%;
 	height: 40px;
 	margin: 10px 0;
@@ -464,7 +465,11 @@ body {
 	text-align: center;
 }
 
-#rate_form__comment textarea {
+#rate-form__rating ul {
+	color: white;
+}
+
+#rate-form__comment textarea {
 	height: 90px;
 	margin: 10px 0;
 	padding: 2px;
@@ -478,18 +483,18 @@ body {
 	resize: none;
 }
 
-.rate_form__field_wrapper input:focus,
-.rate_form__field_wrapper textarea:focus {
+.rate-form__field_wrapper input:focus,
+.rate-form__field_wrapper textarea:focus {
 	border: none;
 }
 
-.rate_form__field_wrapper label {
+.rate-form__field_wrapper label {
 	color: white;
 
 	font-size: 24px;
 }
 
-.rate_form__submit {
+.rate-form__submit {
 	width: 30%;
 	height: 50px;
 	margin: 10px 0;
@@ -502,7 +507,7 @@ body {
 	font-size: 30px;
 }
 
-.rate_form__submit:hover {
+.rate-form__submit:hover {
 	background-color: white;
 	color: #960500;
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
@@ -673,6 +678,22 @@ input[type='number']::-webkit-outer-spin-button {
 	color: white;
 
 	font-weight: 200;
+}
+
+.detail {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+}
+
+.detail__movie {
+	display: flex;
+	flex-direction: column;
+}
+
+.detail__rating {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
 }
 
 @keyframes slideoutLeft {
