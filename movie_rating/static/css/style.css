@@ -270,6 +270,17 @@ body {
 	font-weight: 200;
 }
 
+.login p {
+	margin-left: 20px;
+
+	font-weight: 200;
+}
+
+.login p a {
+	color: white;
+	text-decoration-color: white;
+}
+
 .login form {
 	margin-left: 20px;
 }
