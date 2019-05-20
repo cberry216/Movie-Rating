@@ -20,4 +20,15 @@ def minus_percentage(value, percentage):
 
 @register.simple_tag
 def member_rating(rating_dict, member_name):
-    return rating_dict[member_name]
+    if rating_dict[member_name] is not None:
+        return rating_dict[member_name]
+    else:
+        return "?"
+
+
+@register.simple_tag
+def minus_member_rating(user_rating, rating_dict, member_name):
+    if rating_dict[member_name] is not None:
+        return "{0:+.1f}".format(float(user_rating) - float(rating_dict[member_name]))
+    else:
+        return "N/A"
