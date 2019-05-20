@@ -25,6 +25,7 @@ from .models import (
     Rating,
     Group,
     Rating,
+    User,
 )
 
 # Create your views here.
@@ -91,6 +92,7 @@ def search_movie(request):
 
 @login_required
 def movie_detail(request, imdb_id):
+    group = None
     group_members = []
     group_ratings = {}
 
@@ -109,12 +111,13 @@ def movie_detail(request, imdb_id):
         if len(group_query) > 0:
             for member in group_query:
                 group_members.append(member.username)
-                rating = get_item_or_none_from_queryset(movie_ratings, user=request.user)
+                rating = get_item_or_none_from_queryset(movie_ratings, user=User.objects.get(username=member))
                 group_ratings[member.username] = None if rating is None else rating.rating
     global_rating = float("{0:.1f}".format(movie_ratings.aggregate(avg_rating=Avg('rating'))['avg_rating']))
     movie = Movie.objects.get(imdb_id=imdb_id)
     return render(request, 'ratings/movie_detail.html', {
         'user_rating': user_rating,
+        'group': group,
         'group_members': group_members,
         'group_ratings': group_ratings,
         'global_rating': global_rating,
