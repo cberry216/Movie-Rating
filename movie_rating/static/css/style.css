@@ -260,6 +260,64 @@ body {
 	color: #960500;
 }
 
+.login {
+	margin-top: auto;
+	margin-left: 20px;
+	color: white;
+}
+
+.login h1 {
+	font-weight: 200;
+}
+
+.login form {
+	margin-left: 20px;
+}
+
+.login input {
+	height: 2em;
+	padding: 5px;
+	background-color: grey;
+	border: none;
+	border-radius: 3px;
+
+	font-family: 'American Typewriter', sans-serif;
+	font-size: 1.25em;
+}
+
+.login__username input,
+.login__password input {
+	box-shadow: inset -3px -3px 5px rgba(0, 0, 0, 0.5);
+}
+
+#login__submit {
+	margin-top: 25px;
+	margin-bottom: 25px;
+	width: 100px;
+
+	cursor: pointer;
+
+	font-size: 1.5em;
+}
+
+#login__submit:hover {
+	background-color: #960500;
+	color: white;
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.login__help {
+	margin-left: 20px;
+
+	display: flex;
+}
+
+.login__help a {
+	margin-right: 20px;
+	color: white;
+	text-decoration-color: white;
+}
+
 .group-queue,
 .seen-movies {
 	height: 386px;
