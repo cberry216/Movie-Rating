@@ -4,27 +4,27 @@
 {% block title %}Login{% endblock title %}
 
 {% block content %}
-<div class="login">
+<div class="registration">
   <h1>Login</h1>
   <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    <div class="login__username">
+    <div class="registration__field">
       {{ form.username.errors }}
       <p>Username</p>
       {{ form.username }}
     </div>
-    <div class="login__password">
+    <div class="registration__field">
       {{ form.password.errors }}
       <p>Password</p>
       {{ form.password }}
     </div>
     <input type="hidden" name="next" value="{{ next }}">
-    <input class="login__submit"type="submit" value="Login">
+    <input class="registration__submit"type="submit" value="Login">
   </form>
-  <div class="login__help">
-    <a class="login__reset" href="{% url 'password_reset' %}">Forgotten password?</a>
-    <a href="{% url 'register' %}" class="login__signup">Signup</a>
+  <div class="registration__help">
+    <a class="registration__reset" href="{% url 'password_reset' %}">Forgotten password?</a>
+    <a href="{% url 'register' %}" class="registration__signup">Signup</a>
   </div>
 </div>
 {% endblock content %}
