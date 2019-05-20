@@ -20,7 +20,7 @@
       {{ form.password }}
     </div>
     <input type="hidden" name="next" value="{{ next }}">
-    <input id="login__submit" type="submit" value="Login">
+    <input class="login__submit"type="submit" value="Login">
   </form>
   <div class="login__help">
     <a class="login__reset" href="{% url 'password_reset' %}">Forgotten password?</a>
