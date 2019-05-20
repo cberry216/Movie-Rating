@@ -4,12 +4,14 @@
 
 {% block content %}
 <div class="rating">
-  <div class="rating__movie" style="{% if movie.poster_link %}background-image: url({{ movie.poster_link }}) {% else %} background-color: grey; {% endif%}"></div>
+  <div class="rating__movie"
+    style="{% if movie.poster_link %}background-image: url({{ movie.poster_link }}) {% else %} background-color: grey; {% endif%}">
+  </div>
   <form class="rate-form" action="./{{ movie.imdb_id}}" method="post">
     <h1 class="rate-form__title">{{ movie.title }}</h1>
     {% csrf_token %}
     <div class="rate-form__field_wrapper" id="rate-form__rating">
-      <label for="{{ form.rating.id_for_label}}">Rating*</label>
+      <label for="{{ form.rating.id_for_label}}">Rating<span style="color: red">*</span></label>
       {{ form.rating }}
       {{ form.rating.errors}}
     </div>
@@ -26,7 +28,6 @@
       {{ form.user.errors }}
       {{ form.user }}
     </div>
-    <p style="color: white">* = required</p>
     <input class="rate-form__submit" type="submit" value="Rate">
   </form>
 </div>
