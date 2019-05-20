@@ -286,11 +286,14 @@ body {
 }
 
 .login__username input,
-.login__password input {
+.login__password input,
+.login__first_name input,
+.login__last_name input,
+.login__email input {
 	box-shadow: inset -3px -3px 5px rgba(0, 0, 0, 0.5);
 }
 
-#login__submit {
+.login__submit {
 	margin-top: 25px;
 	margin-bottom: 25px;
 	width: 100px;
@@ -300,7 +303,7 @@ body {
 	font-size: 1.5em;
 }
 
-#login__submit:hover {
+.login__submit:hover {
 	background-color: #960500;
 	color: white;
 	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);

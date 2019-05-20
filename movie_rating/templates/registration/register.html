@@ -3,11 +3,43 @@
 {% block title %}Register{% endblock title %}
 
 {% block content %}
-<h1>Create An Account</h1>
-<p>Please use the form below to sign up:</p>
-<form action="." method="post">
-  {% csrf_token %}
-  {{ user_form.as_p}}
-  <input type="submit" value="Register">
-</form>
+<div class="login">
+  <h1>Create An Account</h1>
+  <form action="." method="post">
+    {% csrf_token %}
+    {{ user_form.non_field_errors}}
+    <div class="login__username">
+      {{ user_form.username.errors }}
+      <p>Username</p>
+      {{ user_form.username }}
+    </div>
+    <div class="login__first_name">
+      {{ user_form.first_name.errors }}
+      <p>First Name</p>
+      {{ user_form.first_name }}
+    </div>
+    <div class="login__last_name">
+      {{ user_form.last_name.errors }}
+      <p>Last Name</p>
+      {{ user_form.last_name }}
+    </div>
+    <div class="login__email">
+      {{ user_form.email.errors }}
+      <p>Email</p>
+      {{ user_form.email }}
+    </div>
+    <div class="login__password">
+      {{ user_form.password.errors }}
+      <p>Password</p>
+      {{ user_form.password }}
+    </div>
+    <div class="login__password">
+      {{ user_form.password2.errors }}
+      <p>Confirm Password</p>
+      {{ user_form.password2 }}
+    </div>
+
+    <input class="login__submit" type="submit" value="Register">
+  </form>
+</div>
 {% endblock content %}
