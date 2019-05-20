@@ -260,32 +260,32 @@ body {
 	color: #960500;
 }
 
-.login {
+.registration {
 	margin-top: auto;
 	margin-left: 20px;
 	color: white;
 }
 
-.login h1 {
+.registration h1 {
 	font-weight: 200;
 }
 
-.login p {
+.registration p {
 	margin-left: 20px;
 
 	font-weight: 200;
 }
 
-.login p a {
+.registration p a {
 	color: white;
 	text-decoration-color: white;
 }
 
-.login form {
+.registration form {
 	margin-left: 20px;
 }
 
-.login input {
+.registration input {
 	height: 2em;
 	padding: 5px;
 	background-color: grey;
@@ -296,15 +296,11 @@ body {
 	font-size: 1.25em;
 }
 
-.login__username input,
-.login__password input,
-.login__first_name input,
-.login__last_name input,
-.login__email input {
+.registration__field input {
 	box-shadow: inset -3px -3px 5px rgba(0, 0, 0, 0.5);
 }
 
-.login__submit {
+.registration__submit {
 	margin-top: 25px;
 	margin-bottom: 25px;
 	width: 100px;
@@ -314,19 +310,19 @@ body {
 	font-size: 1.5em;
 }
 
-.login__submit:hover {
+.registration__submit:hover {
 	background-color: #960500;
 	color: white;
 	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
-.login__help {
+.registration__help {
 	margin-left: 20px;
 
 	display: flex;
 }
 
-.login__help a {
+.registration__help a {
 	margin-right: 20px;
 	color: white;
 	text-decoration-color: white;
