@@ -46,8 +46,6 @@
         <p class="member-rating__value">{% member_rating group_ratings member %}</p>
         <p class="member-rating__diff">{% minus_member_rating user_rating group_ratings member %}</p>
       </div>
-      {% empty %}
-      
       {% endfor %}
     </div>
     {% endif %}
