@@ -1,7 +1,56 @@
 {% extends "base.html" %}
+{% load ratings_tags %}
 
 {% block title %}{{ movie.title }}{% endblock title %}
 
 {% block content %}
-{{ movie.title }}
+<div class="detail">
+  <div class="detail__poster"
+    style="{% if movie.poster_link %}background-image: url({{ movie.poster_link }}) {% else %} background-color: grey; {% endif%}">
+  </div>
+  <div class="detail__movie">
+    <a href="https://www.imdb.com/title/{{ movie.imdb_id }}/" target="_blank" class="detail__title">{{ movie.title }}</a>
+    <h3 class="detail__subtitle">{{ movie.director}}</h3>
+    <h3 class="detail__subtitle">{% if movie.rated != 'N/A' %}Rated {{ movie.rated }}{% else %}Unrated{% endif %}</h3>
+    <h3 class="detail__subtitle">{% if movie.runtime_minutes %}{{ movie.runtime_minutes }} minutes{% else %}Length Unavailable{% endif %}</h3>
+    <h3 class="detail__subtitle">{% if movie.genre %}{{ movie.genre }}{% else %}No Genre{% endif %}</h3>
+    <h3 class="detail__header">Rating</h3>
+    <div class="user-rating">
+      <p class="user-rating__user-rating">{{ user_rating }}</p>
+      <p class="user-rating__null"></p>
+      <p class="user-rating__label user-rating__rating">Rating</p>
+      <p class="user-rating__label user-rating__delta">Δ</p>
+      <p class="user-rating__site user-rating__imdb">IMDB</p>
+      <p class="user-rating__site user-rating__rt">Rotten Tomatoes</p>
+      <p class="user-rating__site user-rating__global">Rate-A-Movie</p>
+      <p class="user-rating__value user-rating__imdb">{% if movie.imdb_rating %}{{ movie.imdb_rating }}{% else %}N/A{% endif %}</p>
+      <p class="user-rating__value user-rating__rt">{% if movie.rt_rating %}{{ movie.rt_rating }}%{% else %}N/A{% endif %}</p>
+      <p class="user-rating__value user-rating__global">{{ global_rating|floatformat }}</p>
+      <p class="user-rating__diff user-rating__imdb">{% if movie.imdb_rating %}{% minus user_rating movie.imdb_rating %}{% else %}N/A{% endif %}</p>
+      <p class="user-rating__diff user-rating__rt">{% if movie.rt_rating %}{% minus_percentage user_rating movie.rt_rating %}%{% else %}N/A{% endif %}</p>
+      <p class="user-rating__diff ruser-ating__global">{% minus user_rating global_rating%}</p>
+    </div>
+    <h3 class="detail__header">Plot</h3>
+    <p class="detail__plot">{% if movie.plot %}{{ movie.plot }}{% else %}No Plot{% endif %}</p>
+    {% if group_ratings %}
+    <h3 class="detail__header">"{{ group.group_name }}" Member Ratings</h3>
+    <div class="group-ratings">
+    <div class="member-labels member-rating">
+        <p class="member-rating__name--label">Member</p>
+        <p class="member-rating__value--label">Rating</p>
+        <p class="member-rating__diff--label">Δ</p>
+      </div>
+      {% for member in group_members %}
+      <div class="member-rating">
+        <p class="member-rating__name">{{ member }}</p>
+        <p class="member-rating__value">{% member_rating group_ratings member %}</p>
+        <p class="member-rating__diff">{% minus_member_rating user_rating group_ratings member %}</p>
+      </div>
+      {% empty %}
+      
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock content %}
