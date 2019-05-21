@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('movie/', include('ratings.movie_urls')),
     path('user/', include('ratings.user_urls')),
+    path('group/', include('ratings.group_urls')),
 ]
