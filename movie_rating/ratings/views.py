@@ -184,3 +184,38 @@ def dashboard(request):
         'movies_seen_by_both': [movie for movie in movies_seen_by_others if movie in movies_seen_by_user],
         'movies_not_seen_by_user': [movie for movie in movies_seen_by_others if movie not in movies_seen_by_user],
     })
+
+
+def group(request):
+    if request.user.group is None:
+        has_group = False
+        return render(request, 'ratings/group.html', {
+            'section': 'group',
+            'has_group': has_group
+        })
+
+    group = request.user.group
+    members = group.users.all()
+
+    group_ratings = Rating.objects.filter(user_id__in=members.values_list('user_id'))
+
+    rated_movies = Movie.objects.filter(movie_id__in=group_ratings.values_list('movie_id'))
+    movie_ratings = dict()
+
+    for movie in rated_movies:
+        for member in members:
+            if member.username not in movie_ratings:
+                movie_ratings[member.username] = dict()
+            movie_ratings[member.username][movie.title] = group_ratings.get(
+                user_id=member.user_id,
+                movie_id=movie.movie_id
+            ).rating
+
+    return render(request, 'ratings/group.html', {
+        'section': 'group',
+        'has_group': True,
+        'group': group,
+        'members': members,
+        'rated_movies': rated_movies,
+        'movie_ratings': movie_ratings,
+    })
