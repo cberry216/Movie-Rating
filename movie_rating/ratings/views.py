@@ -194,28 +194,33 @@ def group(request):
             'has_group': has_group
         })
 
+    user_ratings = Rating.objects.filter(user=request.user)
+    user_movies = list(map(lambda rating: rating.movie, user_ratings))
+
     group = request.user.group
     members = group.users.all()
 
     group_ratings = Rating.objects.filter(user_id__in=members.values_list('user_id'))
+    rated_movies = list(map(lambda rating: rating.movie, group_ratings))
 
-    rated_movies = Movie.objects.filter(movie_id__in=group_ratings.values_list('movie_id'))
     movie_ratings = dict()
 
     for movie in rated_movies:
-        for member in members:
-            if member.username not in movie_ratings:
-                movie_ratings[member.username] = dict()
-            movie_ratings[member.username][movie.title] = group_ratings.get(
-                user_id=member.user_id,
-                movie_id=movie.movie_id
-            ).rating
+        if movie.title not in movie_ratings:
+            movie_ratings[movie.title] = dict()
+            if movie in user_movies:
+                movie_ratings[movie.title]['has_rated'] = True
+                for member in members:
+                    rating = get_item_or_none_from_queryset(group_ratings, user=member, movie=movie)
+                    if rating is not None:
+                        movie_ratings[movie.title][member.username] = rating
+                    else:
+                        movie_ratings[movie.title][member.username] = None
+            else:
+                movie_ratings[movie.title]['has_rated'] = False
 
     return render(request, 'ratings/group.html', {
         'section': 'group',
         'has_group': True,
-        'group': group,
-        'members': members,
-        'rated_movies': rated_movies,
         'movie_ratings': movie_ratings,
     })
