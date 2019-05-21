@@ -5,5 +5,5 @@ from .views import (
 )
 
 urlpatterns = [
-    path('group/', group, name='group'),
+    path('/', group, name='group'),
 ]
