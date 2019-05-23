@@ -1,53 +1,76 @@
-function setRatingColor() {
-  console.log('Setting rating color...');
-  let userRatingElement = document.querySelector('.user-rating__user-rating');
-  let memberRatingElements = document.querySelectorAll('.member-rating__value');
-
-  let userRating = Number.parseFloat(userRatingElement.innerHTML);
-  let greenFactor = 25.5 * userRating;
-  let redFactor = 255 - greenFactor;
-  userRatingElement.setAttribute('style', `color: rgb(${redFactor},${greenFactor},0)`);
-
-  for(let i = 0; i < memberRatingElements.length; i++) {
-    let memberRating = Number.parseFloat(memberRatingElements[i].innerHTML);
-    let greenFactor = 25.5 * memberRating;
-    let redFactor = 255 - greenFactor;
-    memberRatingElements[i].setAttribute('style', `color: rgb(${redFactor},${greenFactor},0)`);
+function setDifferenceFont() {
+  let sourceRatingDiffs = document.querySelectorAll('.source-rating__diff');
+  if(sourceRatingDiffs) {
+    for(let i = 0; i < sourceRatingDiffs.length; i++) {
+      let diff = Number.parseFloat(sourceRatingDiffs[i].innerHTML);
+      if(diff) {
+        if(diff < 0) {
+          sourceRatingDiffs[i].classList.toggle('source-rating__diff--red');
+        } else {
+          sourceRatingDiffs[i].classList.toggle('source-rating__diff--green');
+        }
+      }
+    }
   }
 }
 
-function setDeltaColor() {
-  console.log('Setting delta colors...');
-  let ratingDiffs = document.querySelectorAll('.user-rating__diff');
-  let memberRatingDiffs = document.querySelectorAll('.member-rating__diff');
-  for(let i = 0; i < ratingDiffs.length; i++) {
-    let text = ratingDiffs[i].innerHTML;
-    let value = Number.parseFloat(text);
-    if(value >= 0) {
-      ratingDiffs[i].classList.toggle('user-rating__diff--positive');
-    }
-    else {
-      ratingDiffs[i].classList.toggle('user-rating__diff--negative');
+function setDifferenceArrows() {
+  let sourceRatings = document.querySelectorAll('.source-rating');
+  for(let i = 0; i < sourceRatings.length; i++) {
+    let diff = Number.parseFloat(sourceRatings[i].querySelector('.source-rating__diff').innerHTML);
+    if(diff) {
+      let arrow = sourceRatings[i].querySelector('.source-rating__arrow polyline');
+      if(diff < 0) {
+        arrow.setAttribute('transform', 'rotate(180,10,10)');
+        arrow.setAttribute('fill', 'red');
+        arrow.setAttribute('stroke', 'red');
+      } else {
+        arrow.setAttribute('fill', 'green');
+        arrow.setAttribute('stroke', 'green');
+      }
     }
   }
-  for (let i = 0; i < memberRatingDiffs.length; i++) {
-    let text = memberRatingDiffs[i].innerHTML;
-    if(text.includes("N/A")) {
-      continue;
-    }
-    let value = Number.parseFloat(text);
-    if (value >= 0) {
-      memberRatingDiffs[i].classList.toggle('rating__diff--positive');
-    }
-    else {
-      memberRatingDiffs[i].classList.toggle('rating__diff--negative');
-    }
+}
+
+function setRatingColors() {
+  let userRating = document.querySelector('.user-rating__rating');
+  let imdbRating = document.querySelector('.imdb-rating .source-rating__rating');
+  let rtRating = document.querySelector('.rt-rating .source-rating__rating');
+  let globalRating = document.querySelector('.global-rating .source-rating__rating');
+
+  if(userRating) {
+    let rating = Number.parseFloat(userRating.innerHTML);
+    let greenFactor = 25.5 * rating;
+    let redFactor = 255 - greenFactor;
+    userRating.setAttribute('style', `color: rgb(${redFactor},${greenFactor},0`);
+  }
+
+  if(imdbRating) {
+    let rating = Number.parseFloat(imdbRating.innerHTML);
+    let greenFactor = 25.5 * rating;
+    let redFactor = 255 - greenFactor;
+    imdbRating.setAttribute('style', `color: rgb(${redFactor},${greenFactor},0`);
+  }
+
+  if(rtRating) {
+    let rating = Number.parseInt(rtRating.innerHTML);
+    let greenFactor = 2.55 * rating;
+    let redFactor = 255 - greenFactor;
+    rtRating.setAttribute('style', `color: rgb(${redFactor},${greenFactor},0)`);
+  }
+
+  if(globalRating) {
+    let rating = Number.parseFloat(globalRating.innerHTML);
+    let greenFactor = 25.5 * rating;
+    let redFactor = 255 - greenFactor;
+    globalRating.setAttribute('style', `color: rgb(${redFactor},${greenFactor},0`);
   }
 }
 
 function run() {
-  setRatingColor();
-  setDeltaColor();
+  setDifferenceArrows();
+  setDifferenceFont();
+  setRatingColors();
 }
 
 window.onload = run;
