@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load ratings_tags %}
+
+{% block title %}{{ group.group_name }}{% endblock title %}
+
+{% block content %}
+<div class="group">
+  <h1>Group</h1>
+  {% if has_group %}{{group.group_name}}{% endif %}
+    {% for movie, stats in movie_ratings.items %}
+      <p>{{ movie }}</p>
+      <p>imdb_rating: {{ stats.rating }}</p>
+      <p>has_rated: {{ stats.has_rated }}</p>
+      <p>is_complete: {{ stats.is_complete }}</p>
+      <p>avg_rating: {{ stats.avg_rating }}</p>
+      <p>imdb_accuracy: {{ stats.imdb_diff }}</p>
+    {% if stats.has_rated %}
+      {% with stats.users as users %}
+        {% for user, rating in users.items %}
+          <p>{{ user }}</p>
+          {% if rating.rating %}
+            <p>{{ rating.rating }}</p>
+          {% else %}
+          <p>None</p>
+          {% endif %}
+        {% endfor %}
+      {% endwith %}
+    {% else %}
+      <p>You have not rated this movie yet.</p>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock content %}
