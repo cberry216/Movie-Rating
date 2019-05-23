@@ -14,8 +14,8 @@ def minus(a, b):
 
 
 @register.simple_tag
-def minus_percentage(value, percentage):
-    return "{:+2d}".format(int(value * 10) - percentage)
+def minus_percentage(percentage, value):
+    return "{:+2d}".format(percentage - int(value * 10))
 
 
 @register.simple_tag
