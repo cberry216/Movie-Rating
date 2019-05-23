@@ -1,7 +1,7 @@
 import requests
 
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db.models import Avg, Max, Min, Sum
+from django.db.models import Avg, Max, Min, Sum, F
 from django.shortcuts import render, redirect
 
 from math import ceil
@@ -199,6 +199,7 @@ def group(request):
 
     group = request.user.group
     members = group.users.all()
+    member_count = len(members)
 
     group_ratings = Rating.objects.filter(user_id__in=members.values_list('user_id'))
     rated_movies = list(map(lambda rating: rating.movie, group_ratings))
@@ -209,15 +210,39 @@ def group(request):
         if movie.title not in movie_ratings:
             movie_ratings[movie.title] = dict()
             if movie in user_movies:
+                group_ratings_for_movie = group_ratings.filter(movie=movie)
+                movie_ratings[movie.title]['users'] = dict()
+                movie_ratings[movie.title]['rating'] = movie.imdb_rating
+
+                # User has rated current movie
                 movie_ratings[movie.title]['has_rated'] = True
+
+                # All users have rated current movie
+                if len(group_ratings_for_movie) == member_count:
+                    movie_ratings[movie.title]['is_complete'] = True
+                else:
+                    movie_ratings[movie.title]['is_complete'] = False
+
+                # Average rating of current movie
+                movie_ratings[movie.title]['avg_rating'] = '{0:.1f}'.format(
+                    group_ratings_for_movie.aggregate(avg=Avg('rating'))['avg'])
+
+                # IMDB accuracy of current movie average
+                if movie.imdb_id is not None:
+                    movie_ratings[movie.title]['imdb_diff'] = '{0:+.1f}'.format(float(
+                        movie_ratings[movie.title]['avg_rating']) - float(movie.imdb_rating))
+
                 for member in members:
                     rating = get_item_or_none_from_queryset(group_ratings, user=member, movie=movie)
                     if rating is not None:
-                        movie_ratings[movie.title][member.username] = rating
+                        movie_ratings[movie.title]['users'][member.username] = rating
                     else:
-                        movie_ratings[movie.title][member.username] = None
+                        movie_ratings[movie.title]['users'][member.username] = None
             else:
                 movie_ratings[movie.title]['has_rated'] = False
+                movie_ratings[movie.title]['is_complete'] = False
+                movie_ratings[movie.title]['avg_rating'] = None
+                movie_ratings[movie.title]['imdb_diff'] = None
 
     return render(request, 'ratings/group.html', {
         'section': 'group',
