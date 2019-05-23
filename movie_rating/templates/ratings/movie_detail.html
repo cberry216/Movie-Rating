@@ -19,7 +19,7 @@
     <h3 class="detail__subtitle">{% if movie.genre %}{{ movie.genre }}{% else %}No Genre{% endif %}</h3>
     <h3 class="detail__header">Plot</h3>
     <p class="detail__plot">{% if movie.plot %}{{ movie.plot }}{% else %}No Plot{% endif %}</p>
-    <h3 class="detail__header">Rating</h3>
+    <h3 class="detail__header">You rated this movie</h3>
     <div class="user-rating">
       <h3 class="user-rating__rating">{{ user_rating }}</h3>
       <div class="source-rating imdb-rating">
@@ -49,18 +49,16 @@
     </div>
     {% if group_ratings %}
     <h3 class="detail__header">"{{ group.group_name }}" Member Ratings</h3>
-    <div class="group-ratings">
-      <div class="member-labels member-rating">
-        <p class="member-rating__name--label">Member</p>
-        <p class="member-rating__value--label">Rating</p>
-        <p class="member-rating__diff--label">Δ</p>
-      </div>
-      {% for member in group_members %}
-      <div class="member-rating">
-        <p class="member-rating__name">{{ member }}</p>
-        <p class="member-rating__value">{% member_rating group_ratings member %}</p>
-        <p class="member-rating__diff">{% minus_member_rating user_rating group_ratings member %}</p>
-      </div>
+    <div class="group-rating">
+      {% for member, rating in group_ratings.items %}
+        <div class="member-rating">
+          <p class="member-rating__title">{{ member }}</p>
+          <p class="member-rating__rating">{% if rating %}{{ rating }}{% else %}-{% endif %}</p>
+          <p class="member-rating__diff">{% if rating %}{% minus rating user_rating%}{% else %}-{% endif %}</p>
+          <svg class="member-rating__arrow">
+            <polyline points="0,20 10,0 20,20"></polyline>
+          </svg>
+        </div>
       {% endfor %}
     </div>
     {% endif %}

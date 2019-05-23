@@ -806,7 +806,23 @@ input[type='number']::-webkit-outer-spin-button {
 
 	display: grid;
 	grid-template-columns: 1fr 1.5fr 1.5fr 1.5fr;
-	grid-template-rows: 150px;
+	grid-template-rows: 100px;
+}
+
+.group-rating {
+	height: 100px;
+	width: 100%;
+	background-color: white;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-top: 1px solid #c9c9c9;
+	border-bottom: 1px solid #c9c9c9;
+	border-left: 1px solid #c9c9c9;
+	overflow: scroll;
+
+	display: flex;
+	flex-shrink: 1 0 auto;
+	flex-wrap: nowrap;
 }
 
 .user-rating__rating {
@@ -821,13 +837,18 @@ input[type='number']::-webkit-outer-spin-button {
 	grid-row: 1 / 2;
 }
 
-.source-rating {
+.source-rating,
+.member-rating {
 	height: 100px;
-	border-left: 1px solid #c9c9c9;
+	border-right: 1px solid #c9c9c9;
 
 	display: grid;
 	grid-template-columns: 3fr 2fr;
 	grid-template-rows: 2fr 2fr 2fr;
+}
+
+.member-rating {
+	min-width: calc(100% / 4);
 }
 
 .source-rating__logo {
@@ -839,7 +860,8 @@ input[type='number']::-webkit-outer-spin-button {
 	justify-self: center;
 }
 
-.global-rating__title {
+.global-rating__title,
+.member-rating__title {
 	width: 100%;
 	margin: 0;
 	color: #960500;
@@ -851,7 +873,8 @@ input[type='number']::-webkit-outer-spin-button {
 	grid-row: 1 / 2;
 }
 
-.source-rating__rating {
+.source-rating__rating,
+.member-rating__rating {
 	margin: 0px 10px 0 0;
 	color: black;
 
@@ -864,7 +887,8 @@ input[type='number']::-webkit-outer-spin-button {
 	align-self: center;
 }
 
-.source-rating__diff {
+.source-rating__diff,
+.member-rating__diff {
 	margin: 0;
 	color: black;
 	opacity: 0.5;
@@ -878,15 +902,18 @@ input[type='number']::-webkit-outer-spin-button {
 	align-self: end;
 }
 
-.source-rating__diff--green {
+.source-rating__diff--green,
+.member-rating__diff--green {
 	color: green;
 }
 
-.source-rating__diff--red {
+.source-rating__diff--red,
+.member-rating__diff--red {
 	color: red;
 }
 
-.source-rating__arrow {
+.source-rating__arrow,
+.member-rating__arrow {
 	width: 20px;
 	height: 20px;
 	margin-left: 15px;
@@ -898,68 +925,17 @@ input[type='number']::-webkit-outer-spin-button {
 	align-self: start;
 }
 
-.source-rating__arrow--green {
+.source-rating__arrow--green,
+.member-rating__arrow--green {
 	fill: green;
 	stroke: green;
 }
 
-.source-rating__arrow--red {
+.source-rating__arrow--red,
+.member-rating__arrow--red {
 	fill: red;
 	stroke: red;
 	transform: 'rotate(180, 10, 10)';
-}
-
-.rating__diff--positive {
-	color: green;
-}
-
-.rating__diff--negative {
-	color: red;
-}
-
-.group-ratings {
-	background-color: grey;
-	border-radius: 3px;
-	overflow-x: scroll;
-
-	display: flex;
-	flex-wrap: nowrap;
-}
-
-.member-rating {
-	background-color: rgb(148, 148, 148);
-	margin: 3px;
-	color: black;
-
-	font-weight: 400;
-	text-align: center;
-
-	display: grid;
-	grid-template-columns: 80px;
-	grid-template-rows: 1fr 2fr 1fr;
-}
-
-.member-rating__value {
-	border-top: 1px solid #5a5a5a;
-	border-bottom: 1px solid #5a5a5a;
-	text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.25);
-
-	font-size: 2em;
-
-	align-self: center;
-}
-
-.member-rating__value--label {
-	align-self: center;
-}
-
-.member-labels {
-	background-color: grey;
-}
-
-.member-rating p {
-	margin: 3px;
-	padding: 2px;
 }
 
 .group {
