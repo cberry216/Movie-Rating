@@ -208,6 +208,7 @@ def group(request):
             movie_ratings[movie.title] = dict()
             if movie in user_movies:
                 group_ratings_for_movie = group_ratings.filter(movie=movie)
+                movie_ratings[movie.title]['data'] = movie
                 movie_ratings[movie.title]['users'] = dict()
                 movie_ratings[movie.title]['rating'] = movie.imdb_rating
 
@@ -236,6 +237,7 @@ def group(request):
                     else:
                         movie_ratings[movie.title]['users'][member.username] = None
             else:
+                movie_ratings[movie.title]['data'] = movie
                 movie_ratings[movie.title]['has_rated'] = False
                 movie_ratings[movie.title]['is_complete'] = False
                 movie_ratings[movie.title]['avg_rating'] = None
