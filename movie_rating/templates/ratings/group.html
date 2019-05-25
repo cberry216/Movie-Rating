@@ -5,6 +5,29 @@
 
 {% block content %}
 <div class="group">
+  {% for movie, stats in movie_ratings.items %}
+    <div class="group-movie">
+      <h1 class="group-movie__title">{{ movie }}</h1>
+      <img src="{% if stats.data.poster_link %}{{ stats.data.poster_link }}{% endif %}" alt="{{ movie }}" class="group-movie__poster">
+      {% if stats.has_rated %}
+        <div class="group-movie__ratings">
+          {% with stats.users as users %}
+            {% for member, rating in users.items %}
+              <div class="member-rating">
+                <p class="member-rating__title">{{ member }}</p>
+                <p class="member-rating__rating group-member__rating">{% if rating %}{{ rating.rating }}{% else %}?{% endif %}</p>
+              </div>
+            {% endfor %}
+          {% endwith %}
+        </div>
+      {% else %}
+      {% endif %}
+    </div>
+  {% empty %}
+
+  {% endfor %}
+</div>
+<div class="group">
   <h1>Group</h1>
   {% if has_group %}{{group.group_name}}{% endif %}
     {% for movie, stats in movie_ratings.items %}
